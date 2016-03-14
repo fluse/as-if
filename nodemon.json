@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "src/**/*", "dist/**/*"],
+  "env": {
+    "NODE_ENV": "dev"
+  },
+  "ext": "js json",
+  "events": {
+    "restart": "osascript -e 'display notification \"app restarted\" with title \"vinyl jukebox\"'",
+    "crash": "osascript -e 'display notification \"app crashed\" with title \"vinyl jukebox\"'"
+  }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>{{getTitle response}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/public/dist/app{{#if request.environment.production}}.min{{/if}}.css" />
+    <link rel="icon" type="image/png" href="/public/favicon.png" />
+
+</head>
+    <main id="page" role="main">
+        {{{body}}}
+    </main>
+
+    <script>
+        var response = {{{toJSON response}}};
+        var request = {{{toJSON request}}};
+    </script>
+
+    <script src="/public/dist/app.js"></script>
+
+    {{#unless request.environment.production}}
+        <script src="//localhost:35551/livereload.js"></script>
+    {{/unless}}
+</body>
+</html>

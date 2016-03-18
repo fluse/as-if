@@ -41,6 +41,10 @@ app.use('/public', express.static('public'));
 // get routes
 require('./routes/')(app);
 
+var Navigation = require('./navigation/');
+
+new Navigation();
+
 server.listen(app.config.request.environment.port);
 
 console.log('jukebox listen on port %s', app.config.request.environment.port);

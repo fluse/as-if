@@ -12,6 +12,7 @@ module.exports = function (app) {
         });
 
         albumScanner.start((list) => {
+            console.log(list);
             // render page
             app.io.sockets.emit('getAlbums', list);
         });

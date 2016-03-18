@@ -6,8 +6,12 @@
 
 .debug {
     .buttons {
-
+        float: left;
+        display: block;
+        width: 100%;
         li {
+            padding: .5em;
+            font-size: 1.2em;
             background-color: rgb(180, 180, 180);
 
             &.active {
@@ -15,5 +19,26 @@
             }
         }
 
+    }
+}
+
+.album-list {
+    li {
+        float: left;
+        width: 16.666666667%;
+
+
+        .album {
+            padding-left: 20%;
+        }
+        img {
+            float: left;
+            width: 20%;
+        }
+
+        .info {
+            float: left;
+            width: 80%;
+        }
     }
 }

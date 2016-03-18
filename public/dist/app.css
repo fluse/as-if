@@ -69,13 +69,13 @@ input, textarea {
 body {
   font-size: 62.5%;
   min-width: 320px;
-  background-color: #edefed; }
+  background-color: #000; }
 
 body, input, textarea, select, button {
-  font-family: 'Open Sans', sans-serif; }
+  font-family: arial, sans-serif; }
 
 li, p, strong, span, h2, h3, h4, h5 {
-  color: #353535;
+  color: #fff;
   display: inline-block; }
 
 .no-scroll {
@@ -89,7 +89,25 @@ li, p, strong, span, h2, h3, h4, h5 {
   overflow: hidden;
   margin-bottom: 10px; }
 
-.debug .buttons li {
-  background-color: #b4b4b4; }
-  .debug .buttons li.active {
-    background-color: green; }
+.debug .buttons {
+  float: left;
+  display: block;
+  width: 100%; }
+  .debug .buttons li {
+    padding: .5em;
+    font-size: 1.2em;
+    background-color: #b4b4b4; }
+    .debug .buttons li.active {
+      background-color: green; }
+
+.album-list li {
+  float: left;
+  width: 16.666666667%; }
+  .album-list li .album {
+    padding-left: 20%; }
+  .album-list li img {
+    float: left;
+    width: 20%; }
+  .album-list li .info {
+    float: left;
+    width: 80%; }

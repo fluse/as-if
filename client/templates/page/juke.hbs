@@ -1,0 +1,16 @@
+<span v-on:click="showSocket">test</span>
+Alben: \{{albums.length}}
+<div class="debug">
+    <ul class="buttons">
+        <li v-for="button in buttons" v-bind:class="{ 'active': button.state.isPressed}">
+            \{{button.state.pin}}
+        </li>
+    </ul>
+</div>
+
+<ul>
+    <li v-for="album in albums">
+        \{{album.artist}}
+        <img src="\{{album.cover}}" />
+    </li>
+</ul>

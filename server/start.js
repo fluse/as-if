@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
     limit: '50mb',
     extended: false
 }));
+
 app.use(bodyParser.json({limit: '50mb'}));
 
 app.use(compression());
@@ -43,7 +44,7 @@ require('./routes/')(app);
 
 var Navigation = require('./navigation/');
 
-new Navigation();
+new Navigation(app);
 
 server.listen(app.config.request.environment.port);
 

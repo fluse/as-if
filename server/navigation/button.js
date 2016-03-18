@@ -1,15 +1,29 @@
 var five = require('johnny-five');
 
-var Button = function (pin) {
+var Button = function (pin, cb) {
 
     var button = new five.Button(pin);
-    button.on('hold', function() {
-        console.log('hold %s', pin);
-    }).on('press', function() {
-        console.log('press %s', pin);
-    }).on('release', function() {
-        console.log('release %s', pin);
+
+    this.state = {
+        pin: pin,
+        isPressed: false
+    };
+
+    button.on('hold', () => {
+        cb();
+    }).on('press', () => {
+        this.state.isPressed = true;
+        cb();
+    }).on('release', () => {
+        this.state.isPressed = false;
+        cb();
     });
+};
+
+Button.prototype = {
+    getState () {
+        return this.state;
+    }
 };
 
 module.exports = Button;

@@ -2,10 +2,10 @@
   "name": "as-if",
   "version": "1.0.0",
   "description": "mediafile jukebox",
-  "main": "node --harmony server/start.js",
+  "main": "server/start.js",
   "scripts": {
     "postinstall": "cd scripts/ && sh compile.sh",
-    "start": "node --harmony server/start.js",
+    "start": "node test.js",
     "dev": "nodemon",
     "minify": "cd scripts/ && sh uglify.sh && cd ../ && grunt deploy",
     "deploy": "cd scripts/ && sh compile.sh",

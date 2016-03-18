@@ -1,0 +1,30 @@
+body {
+    font-size: 62.5%;
+    min-width: 320px;
+    background-color: $color-background;
+}
+
+body, input, textarea, select, button {
+    font-family: 'Open Sans', sans-serif;
+}
+
+li, p, strong, span, h2, h3, h4, h5 {
+    color: $color-text;
+    display: inline-block;
+}
+
+%round {
+    border-radius: 2px;
+}
+
+.no-scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+}

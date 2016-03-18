@@ -1,9 +1,8 @@
 var albumScanner = require('./../../scan.js');
-
+var extend = require('extend');
 module.exports = function (app) {
 
     app.get('/', (req, res) => {
-
 
         res.renderPage({
             page: 'juke'
@@ -12,9 +11,9 @@ module.exports = function (app) {
         });
 
         albumScanner.start((list) => {
-            console.log(list);
-            // render page
-            app.io.sockets.emit('getAlbums', list);
+            app.config.player.albums = list;
+
+            app.io.sockets.emit('getAlbums', app.config.player.albums);
         });
     });
 

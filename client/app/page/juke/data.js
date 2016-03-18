@@ -1,13 +1,14 @@
 /* globals response */
 
 var extend = require('extend');
-var socket = require('socket.io-client')('http://' + window.location.hostname + ':4711');
+var socket = require('socket.io-client')();
 
 module.exports = function () {
 
     return extend({
         socket: socket,
-        albums: []
+        albums: [],
+        buttons: [],
     }, response);
 
 };

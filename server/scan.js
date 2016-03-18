@@ -1,7 +1,8 @@
 var fs = require('fs'),
     mm = require('musicmetadata'),
     glob = require('glob'),
-    async = require('async');
+    async = require('async'),
+    _ = require('lodash');
 
 module.exports = {
 
@@ -19,12 +20,21 @@ module.exports = {
 
                     if (!err && metadata.picture.length > 0) {
 
-                        if (!this.list.hasOwnProperty(metadata.album)) {
-                            this.list[metadata.album] = [metadata];
-                        } else {
-                            this.list[metadata.album].push(metadata);
-                        }
 
+                        var result = _.find(this.list, function(o) {
+                            return o.artist === metadata.artist[0] && o.album === metadata.album;
+                        });
+
+                        if (!result) {
+                            this.list.push({
+                                artist: metadata.artist[0],
+                                album: metadata.album,
+                                tracks: [metadata.track],
+                                cover: 'public/cover/' + metadata.album + '.' + metadata.picture[0].format
+                            });
+                        } else {
+                            result.tracks.push(metadata.track || {});
+                        }
 
                         fs.writeFile(writePath + metadata.album + '.' + metadata.picture[0].format, metadata.picture[0].data, function (err) {
                             if (err) {

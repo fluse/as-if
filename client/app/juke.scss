@@ -1,1 +1,19 @@
 /*@import 'settings';*/
+@import 'base/settings';
+@import 'base/reset';
+@import 'base/general';
+@import 'base/breakpoints';
+
+.debug {
+    .buttons {
+
+        li {
+            background-color: rgb(180, 180, 180);
+
+            &.active {
+                background-color: green;
+            }
+        }
+
+    }
+}

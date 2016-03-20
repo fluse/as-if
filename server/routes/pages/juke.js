@@ -4,12 +4,7 @@ module.exports = function (app) {
 
         res.renderPage({
             page: 'juke'
-        }, {
-            albums: []
-        });
-
-        app.navigation.getButtons();
-        app.scanner.getList();
+        }, {} /* data object */);
     });
 
 };

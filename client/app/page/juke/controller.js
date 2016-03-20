@@ -10,12 +10,16 @@ module.exports = function () {
         mixins: [],
         data: data,
         ready () {
-            this.socket.emit('requireAlbums', (list) => {
-                this.album = list;
-            });
-            this.socket.on('getAlbums', (list) => {
+            this.socket.emit('requireAlbums');
+
+            this.socket.on('sendAlbums', (list) => {
                 console.log(list);
                 this.album = list;
+            });
+
+            this.socket.on('sendAlbum', (album) => {
+                console.log(album);
+                this.album.current = album;
             });
 
             this.socket.on('action', (buttons) => {

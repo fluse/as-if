@@ -1,0 +1,54 @@
+'use strict';
+var Navigation = require('./navigation/'),
+    Scanner = require('./scanner.js');
+
+class Juke {
+    constructor (app) {
+        this.app = app;
+        this.navigation = new Navigation(app, this.onSelection.bind(this));
+
+        this.scanner = new Scanner(app, (list) => {
+            this.app.config.player.album.list = list;
+            this.sendToDisplay();
+        });
+
+        this.state = 'albumList';
+    }
+
+    setPage (number) {
+        this.scanner.currentPage = number;
+    }
+
+    getCurrentPage () {
+        this.scanner.getList();
+    }
+
+    onSelection (value) {
+        if (this.state === 'albumList') {
+            this.prePareAlbum(value);
+            this.state = 'trackList'
+        } else {
+            this.showAlbumList();
+        }
+    }
+
+    showAlbumList() {
+        this.state = 'albumList';
+        this.app.config.player.album.current = false;
+        this.app.io.sockets.emit('sendAlbum', false);
+    }
+
+    sendToDisplay() {
+        console.log('sendToDisplay');
+        this.app.io.sockets.emit('sendAlbums', this.app.config.player.album);
+    }
+
+    prePareAlbum (value) {
+        var album = this.scanner.getAlbum(value - 1);
+        console.log(album);
+        this.app.config.player.album.current = album;
+        this.app.io.sockets.emit('sendAlbum', this.app.config.player.album.current);
+    }
+}
+
+module.exports = Juke;

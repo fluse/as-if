@@ -1,7 +1,7 @@
 /* globals response */
 
 var extend = require('extend');
-var socket = require('socket.io-client')();
+var socket = require('socket.io-client')('http://' + window.location.hostname + ':4711');
 
 module.exports = function () {
 
@@ -9,7 +9,7 @@ module.exports = function () {
         socket: socket,
         album: {
             list: [],
-            current: null
+            current: false
         },
         buttons: [],
     }, response);

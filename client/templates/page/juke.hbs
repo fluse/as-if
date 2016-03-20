@@ -6,12 +6,23 @@
     </ul>
 </div>
 
-<ul class="album-list" hide="album.current !== null">
+<ul class="album-list" v-show="album.current === false">
     <li v-for="current in album.list">
         <div class="album">
             <img src="\{{current.cover}}" />
             <div class="info">
                 <h3>\{{current.albumartist}}</h3>
+                <h4>\{{current.album}}</h4>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<ul class="album-track-list" v-show="album.current !== false">
+    <li v-for="track in album.current.tracks">
+        <div class="album">
+            <div class="info">
+                <h3>\{{track.title}}</h3>
                 <h4>\{{current.album}}</h4>
             </div>
         </div>

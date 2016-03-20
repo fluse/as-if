@@ -3,7 +3,7 @@ module.exports = {
     isPlayed: false,
     album: {
         list: [],
-        current: null
+        current: false
     },
     history: []
 };

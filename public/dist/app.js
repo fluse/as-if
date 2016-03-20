@@ -31,12 +31,16 @@ module.exports = function () {
         ready: function ready() {
             var _this = this;
 
-            this.socket.emit('requireAlbums', function (list) {
-                _this.album = list;
-            });
-            this.socket.on('getAlbums', function (list) {
+            this.socket.emit('requireAlbums');
+
+            this.socket.on('sendAlbums', function (list) {
                 console.log(list);
                 _this.album = list;
+            });
+
+            this.socket.on('sendAlbum', function (album) {
+                console.log(album);
+                _this.album.current = album;
             });
 
             this.socket.on('action', function (buttons) {
@@ -61,7 +65,7 @@ module.exports = function () {
 /* globals response */
 
 var extend = require('extend');
-var socket = require('socket.io-client')();
+var socket = require('socket.io-client')('http://' + window.location.hostname + ':4711');
 
 module.exports = function () {
 
@@ -69,7 +73,7 @@ module.exports = function () {
         socket: socket,
         album: {
             list: [],
-            current: null
+            current: false
         },
         buttons: []
     }, response);

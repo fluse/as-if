@@ -42,19 +42,19 @@ module.exports = class mp3Scanner {
     }
 
     getList () {
-        return this.list[this.currentPage - 1];
+        var albums = _.cloneDeep(this.list[this.currentPage - 1]);
+        for (let album of albums) {
+            delete album.tracks;
+        }
+        return albums;
+    }
+
+    getAlbum (pos) {
+        return this.list[this.currentPage - 1][pos];
     }
 
     paginate () {
-
-        function chunk(arr, chunkSize) {
-            var R = [];
-            for (var i = 0,len = arr.length; i < len; i += chunkSize) {
-                R.push(arr.slice(i,i+chunkSize));
-            }
-            return R;
-        }
-        this.list = chunk(this.list, this.chunkSize);
+        this.list = _.chunk(this.list, this.chunkSize);
     }
 
     mapData (metadata) {
@@ -72,12 +72,12 @@ module.exports = class mp3Scanner {
                 albumartist: metadata.albumartist[0],
                 album: metadata.album,
                 year: metadata.year,
-                tracks: [metadata.track],
+                tracks: [metadata],
                 cover: imagePath
             });
         } else {
             // write track to list
-            result.tracks.push(metadata.track || {});
+            result.tracks.push(metadata || {});
         }
 
     }

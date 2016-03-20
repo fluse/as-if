@@ -1,0 +1,40 @@
+'use strict';
+
+var five = require('johnny-five');
+var Button = require('./button.js');
+var SelectionManager = require('./SelectionManager.js');
+
+class Board {
+    constructor (app) {
+        this.app = app;
+        this.buttonList = [2, 4];
+        this.buttons = [];
+        var board = new five.Board();
+
+        this.selectionManager = new SelectionManager(app);
+
+        // initialize all buttons from buttonList;
+        board.on('ready', this.create.bind(this));
+    }
+
+    create () {
+        this.createButtons ();
+    }
+
+    createButtons () {
+        for (var i = 0; i < this.buttonList.length; i++) {
+            this.buttons.push(new Button(this.buttonList[i], this.onInput.bind(this)));
+        }
+    }
+
+    getButtons() {
+        this.app.io.sockets.emit('action', this.buttons);
+    }
+
+    onInput () {
+        this.app.io.sockets.emit('action', this.buttons);
+        this.selectionManager.onInput(this.buttons);
+    }
+}
+
+module.exports = Board;

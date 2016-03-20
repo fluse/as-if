@@ -11,11 +11,11 @@ module.exports = function () {
         data: data,
         ready () {
             this.socket.emit('requireAlbums', (list) => {
-                this.albums = list;
+                this.album = list;
             });
             this.socket.on('getAlbums', (list) => {
                 console.log(list);
-                this.albums = list;
+                this.album = list;
             });
 
             this.socket.on('action', (buttons) => {

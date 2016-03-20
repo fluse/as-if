@@ -8,7 +8,9 @@ var express = require('express'),
     io = require('socket.io')(server),
     compression = require('compression'),
     // get application config
-    app = require('./../config/')(app);
+    app = require('./../config/')(app),
+    Navigation = require('./juke/navigation/'),
+    Scanner = require('./juke/scanner.js');
 
 app.io = io;
 app.use(bodyParser.urlencoded({
@@ -39,12 +41,15 @@ app.set('views', 'client/templates/');
 // Static Routes
 app.use('/public', express.static('public'));
 
+app.navigation = new Navigation(app);
+
+app.scanner = new Scanner(app, (list) => {
+    app.config.player.album.list = list;
+    app.io.sockets.emit('getAlbums', app.config.player.album);
+});
+
 // get routes
 require('./routes/')(app);
-
-var Navigation = require('./navigation/');
-
-new Navigation(app);
 
 server.listen(app.config.request.environment.port);
 

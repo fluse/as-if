@@ -7,7 +7,10 @@ module.exports = function () {
 
     return extend({
         socket: socket,
-        albums: [],
+        album: {
+            list: [],
+            current: null
+        },
         buttons: [],
     }, response);
 

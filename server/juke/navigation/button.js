@@ -16,7 +16,7 @@ var Button = function (pin, cb) {
         cb();
     }).on('release', () => {
         this.state.isPressed = false;
-        cb();
+        //cb();
     });
 };
 

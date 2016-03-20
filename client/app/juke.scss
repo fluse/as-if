@@ -24,19 +24,23 @@
 
 .album-list {
     li {
+        padding: .2em 0;
         float: left;
         width: 16.666666667%;
 
 
         .album {
+
             padding-left: 20%;
         }
+
         img {
             float: left;
             width: 20%;
         }
 
         .info {
+            font-weight: normal;
             float: left;
             width: 80%;
         }

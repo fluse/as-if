@@ -1,3 +1,9 @@
 module.exports = {
-    albums: []
+    albums: [],
+    isPlayed: false,
+    album: {
+        list: [],
+        current: null
+    },
+    history: []
 };

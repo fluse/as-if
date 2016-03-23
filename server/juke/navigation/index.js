@@ -3,28 +3,55 @@
 var five = require('johnny-five');
 var Button = require('./button.js');
 var SelectionManager = require('./SelectionManager.js');
+var Mapping = require('./mapping.js');
 
 class Board {
 
-    constructor (app, onSelection) {
+    constructor (app, hooks) {
         this.app = app;
-        this.buttonList = [2, 4];
+        this.buttonList = Mapping;
         this.buttons = [];
         var board = new five.Board();
+        this.lastVolatage = 0;
+        this.maxVolateage = 1023;
+        this.selectionManager = new SelectionManager(app, hooks.onSelection);
 
-        this.selectionManager = new SelectionManager(app, onSelection);
-
+        var self = this;
         // initialize all buttons from buttonList;
-        board.on('ready', this.create.bind(this));
+        board.on('ready', function () {
+            self.create();
+
+            this.analogRead(1, self.convertVolumePegel.bind(self));
+
+            hooks.onReady();
+        });
+    }
+
+    convertVolumePegel(voltage) {
+        if (this.lastVolatage !== voltage &&
+            this.lastVolatage !== (voltage - 1) &&
+            this.lastVolatage !== (voltage + 1)
+        ) {
+            this.lastVolatage = voltage;
+            var percentage = Math.round(Math.abs((voltage / this.maxVolateage * 100) - 100));
+            console.log('%s%', percentage);
+        }
     }
 
     create () {
-        this.createButtons ();
+        this.createButtons();
     }
 
     createButtons () {
-        for (var i = 0; i < this.buttonList.length; i++) {
-            this.buttons.push(new Button(this.buttonList[i], this.onInput.bind(this)));
+        console.log(this.buttonList);
+        for (var button in this.buttonList) {
+            try {
+                var current = new Button(button, this.onInput.bind(this));
+                this.buttons.push(current);
+            } catch (e) {
+                console.log(e);
+            }
+
         }
     }
 

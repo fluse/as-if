@@ -5,11 +5,15 @@ var Navigation = require('./navigation/'),
 class Juke {
     constructor (app) {
         this.app = app;
-        this.navigation = new Navigation(app, this.onSelection.bind(this));
 
         this.scanner = new Scanner(app, (list) => {
             this.app.config.player.album.list = list;
             this.sendToDisplay();
+        });
+
+        this.navigation = new Navigation(app, {
+            onSelection: this.onSelection.bind(this),
+            onReady: this.scanner.start.bind(this.scanner)
         });
 
         this.state = 'albumList';
@@ -26,8 +30,10 @@ class Juke {
     onSelection (value) {
         if (this.state === 'albumList') {
             this.prePareAlbum(value);
-            this.state = 'trackList'
-        } else {
+            this.state = 'trackList';
+            return;
+        }
+        if (value === 1) {
             this.showAlbumList();
         }
     }

@@ -14,22 +14,27 @@ module.exports = class mp3Scanner {
         this.currentPage = 1;
         this.chunkSize = 120;
         this.list = [];
-        this.start();
+        //this.start();
     }
 
     start () {
         // options is optional
         glob(__dirname + '/../../media/**/*.mp3', (er, files) => {
-            async.each(files, (file, cb) => {
+            async.eachSeries(files, (file, cb) => {
                 // parse mp3 for id3 tags
                 mp3Parser(fs.createReadStream(file), (err, metadata) => {
                     if (!err) {
-                        this.mapData(metadata);
                         this.saveCover(metadata);
+                        this.mapData(metadata);
+                    } else {
+                        console.log(err);
                     }
+                    console.log("%s - %s", metadata.artist[0], metadata.title);
                     cb();
                 });
+
             }, () => {
+                console.log('ready');
                 this.sort();
                 this.paginate();
                 this.onFinish(this.getList());
@@ -50,7 +55,9 @@ module.exports = class mp3Scanner {
     }
 
     getAlbum (pos) {
-        return this.list[this.currentPage - 1][pos];
+        var album = _.cloneDeep(this.list[this.currentPage - 1][pos]);
+
+        return album;
     }
 
     paginate () {
@@ -61,21 +68,26 @@ module.exports = class mp3Scanner {
         //console.log(metadata);
         // is created
         var result = _.find(this.list, function(o) {
-            return o.albumartist === metadata.albumartist[0] && o.album === metadata.album;
+            return o.albumartist === metadata.artist[0] && o.album === metadata.album;
         });
 
         if (!result) {
             var imagePath = metadata.picture.length > 0 ? 'public/cover/' + metadata.album + '.' + metadata.picture[0].format : '';
-
+            if (metadata.picture) {
+                delete metadata.picture;
+            }
             // create album entry
             this.list.push({
-                albumartist: metadata.albumartist[0],
+                albumartist: metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0],
                 album: metadata.album,
                 year: metadata.year,
                 tracks: [metadata],
                 cover: imagePath
             });
         } else {
+            if (metadata.picture) {
+                delete metadata.picture;
+            }
             // write track to list
             result.tracks.push(metadata || {});
         }

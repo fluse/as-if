@@ -4,7 +4,8 @@ var fs = require('fs'),
     mp3Parser = require('musicmetadata'),
     glob = require('glob'),
     async = require('async'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    lwip = require('lwip');
 
 module.exports = class mp3Scanner {
 
@@ -14,7 +15,7 @@ module.exports = class mp3Scanner {
         this.currentPage = 1;
         this.chunkSize = 120;
         this.list = [];
-        //this.start();
+        this.start();
     }
 
     start () {
@@ -24,7 +25,6 @@ module.exports = class mp3Scanner {
                 // parse mp3 for id3 tags
                 mp3Parser(fs.createReadStream(file), (err, metadata) => {
                     if (!err) {
-                        this.saveCover(metadata);
                         this.mapData(metadata);
                     } else {
                         console.log(err);
@@ -55,9 +55,7 @@ module.exports = class mp3Scanner {
     }
 
     getAlbum (pos) {
-        var album = _.cloneDeep(this.list[this.currentPage - 1][pos]);
-
-        return album;
+        return this.list[this.currentPage - 1][pos];
     }
 
     paginate () {
@@ -73,6 +71,7 @@ module.exports = class mp3Scanner {
 
         if (!result) {
             var imagePath = metadata.picture.length > 0 ? 'public/cover/' + metadata.album + '.' + metadata.picture[0].format : '';
+            this.saveCover(metadata);
             if (metadata.picture) {
                 delete metadata.picture;
             }
@@ -99,12 +98,23 @@ module.exports = class mp3Scanner {
         if (metadata.picture.length > 0) {
             var fileNameAndPath = __dirname + '/../../public/cover/' + metadata.album + '.' + metadata.picture[0].format;
             var coverData = metadata.picture[0].data;
-
-            fs.writeFile(fileNameAndPath, coverData, function (err) {
+            lwip.open(coverData, metadata.picture[0].format, function(err, image) {
                 if (err) {
-                    throw (err);
+                    console.log(err);
+                    return;
+                }
+                try {
+                    console.log(fileNameAndPath);
+                    image.batch().crop(150, 150).writeFile(fileNameAndPath, function(err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                } catch (e) {
+
                 }
             });
+
         }
     }
 };

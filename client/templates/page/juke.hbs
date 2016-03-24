@@ -9,7 +9,7 @@
 <ul class="album-list" v-show="album.current === false">
     <li v-for="current in album.list">
         <div class="album">
-            <img src="\{{current.cover}}" />
+            <img :src="current.cover" />
             <div class="info">
                 <h3>\{{current.albumartist}}</h3>
                 <h4>\{{current.album}}</h4>

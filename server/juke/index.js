@@ -13,7 +13,7 @@ class Juke {
 
         this.navigation = new Navigation(app, {
             onSelection: this.onSelection.bind(this),
-            onReady: this.scanner.start.bind(this.scanner)
+            onReady: () => {}
         });
 
         this.state = 'albumList';

@@ -48,7 +48,6 @@
         @extend %cf;
 
         .album {
-            padding-left: 30%;
             height: 30px;
             overflow: hidden;
             display: block;
@@ -83,14 +82,6 @@
         }
     }
 
-    li:nth-child(6n+1) {
-
-        .album {
-            padding-left: 15%;
-        }
-    }
-
-
     // active row a
     &.row-A {
         li:nth-child(n+1):nth-child(-n+6) {
@@ -98,9 +89,11 @@
         }
     }
 
+    $rowGap: .4em;
+
     // 1-2
     li:nth-child(n+7):nth-child(-n+12) {
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // active row a
@@ -112,50 +105,42 @@
 
     // 3-4
     li:nth-child(n+19):nth-child(-n+24) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 5-6
     li:nth-child(n+31):nth-child(-n+36) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 7-8
     li:nth-child(n+43):nth-child(-n+48) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 9-10
     li:nth-child(n+55):nth-child(-n+60) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 11-12
     li:nth-child(n+67):nth-child(-n+72) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 13-14
     li:nth-child(n+79):nth-child(-n+84) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 15-16
     li:nth-child(n+91):nth-child(-n+96) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 
     // 17-18
     li:nth-child(n+103):nth-child(-n+108) {
-
-        margin-bottom: .3em;
+        margin-bottom: $rowGap;
     }
 }
 

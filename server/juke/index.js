@@ -38,9 +38,11 @@ class Juke {
             return this.showAlbumList();
         }
 
-
-        this.app.config.player.album.activeTrack = this.app.config.player.album.current.tracks[result.value - 1];
-        console.log(this.app.config.player.album.activeTrack);
+        if (this.app.config.player.album.current.tracks.length >= result.value) {
+            this.app.config.player.album.activeTrack = this.app.config.player.album.current.tracks[result.value - 1];
+            console.log(this.app.config.player.album.activeTrack);
+        }
+        
         this.sendToDisplay();
     }
 

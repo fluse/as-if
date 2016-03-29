@@ -6,8 +6,8 @@ var fs = require('fs'),
     async = require('async'),
     _ = require('lodash'),
     lwip = require('lwip'),
-    path = require("path"),
-    fs = require("fs");
+    path = require('path'),
+    fs = require('fs');
 
 module.exports = class mp3Scanner {
 
@@ -27,15 +27,18 @@ module.exports = class mp3Scanner {
             files.forEach(function(file) {
                 var dir = path.dirname(file);
                 var filename = path.basename(file);
-                fs.renameSync(file, dir + "/" + filename.replace(/[^.A-Z0-9/]/ig, '-'));
+                fs.renameSync(file, dir + '/' + filename.replace(/[^.A-Z0-9/]/ig, '-'));
             });
 
             async.eachSeries(files, (file, cb) => {
                 // parse mp3 for id3 tags
                 mp3Parser(fs.createReadStream(file), (err, metadata) => {
                     if (!err) {
-                        this.mapData(file, metadata);
-                        console.log("%s - %s", metadata.artist[0], metadata.title);
+                        this.saveCover(metadata, () => {
+                            this.mapData(file, metadata);
+                        });
+
+                        console.log('%s - %s', metadata.artist[0], metadata.title);
                     } else {
                         console.log(err);
                     }
@@ -66,15 +69,18 @@ module.exports = class mp3Scanner {
     }
 
     getList () {
-
-
         var albums = _.cloneDeep(this.list[this.currentPage - 1]);
-        for (let album of albums) delete album.tracks;
+        for (let album of albums) {
+            delete album.tracks;
+        }
 
         return albums;
     }
 
     getAlbum (pos) {
+        if (this.list[this.currentPage - 1].length > pos) {
+            return false;
+        }
         return this.list[this.currentPage - 1][pos];
     }
 
@@ -88,25 +94,23 @@ module.exports = class mp3Scanner {
         var result = _.find(this.list, function(o) {
             return o.albumartist === metadata.artist[0] && o.album === metadata.album;
         });
-
-        var fileName = metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
+        var artist = metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0];
+        var fileName = artist.replace(/[^A-Z0-9/]/ig, '-').toLowerCase() + metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
         var fileFormat = metadata.picture[0].format;
         var imagePath = metadata.picture.length > 0 ? 'cover/' + fileName + '.' + fileFormat : '';
+        if (imagePath === 'cover/.jpg') {
+            console.error(metadata);
+        }
+        // remove special chars from filename
         metadata.filePath = '/media/' + filePath.replace(/^.*[\\\/]/, '');
+
+        if (imagePath === 'cover/.jpg') {
+            return;
+        }
         if (!result) {
-            // remove special chars from filename
-
-
-            this.saveCover(metadata);
-            if (metadata.picture) {
-                delete metadata.picture;
-            }
-
-
-
             // create album entry
             this.list.push({
-                albumartist: metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0],
+                albumartist: artist,
                 album: metadata.album,
                 year: metadata.year,
                 tracks: [metadata],
@@ -122,19 +126,31 @@ module.exports = class mp3Scanner {
 
     }
 
-    saveCover (metadata) {
+    saveCover (metadata, cb) {
 
         if (metadata.picture.length > 0) {
-            var fileName = metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
+            var artist = metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0];
+            var fileName = artist.replace(/[^A-Z0-9/]/ig, '-').toLowerCase() + metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
             var fileNameAndPath = __dirname + '/../../public/cover/' + fileName + '.' + metadata.picture[0].format;
             var coverData = metadata.picture[0].data;
+            fs.writeFile(fileNameAndPath, coverData, function (err) {
+                if (err) {
+                    throw (err);
+                }
+                cb();
+            });
+            return;
             lwip.open(coverData, metadata.picture[0].format, function(err, image) {
                 if (err) {
                     console.log(err);
                     return;
                 }
+
+                if (metadata.picture) {
+                    delete metadata.picture;
+                }
+
                 try {
-                    console.log(fileNameAndPath);
                     image.batch().crop(150, 150).writeFile(fileNameAndPath, function(err) {
                         if (err) {
                             console.log(err);

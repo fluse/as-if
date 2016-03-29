@@ -307,7 +307,6 @@ li, p, strong, span, h2, h3, h4, h5 {
   float: left;
   width: 16%; }
   .album-list li .album {
-    padding-left: 30%;
     height: 30px;
     overflow: hidden;
     display: block;
@@ -330,41 +329,38 @@ li, p, strong, span, h2, h3, h4, h5 {
     float: right;
     width: 80%; }
 
-.album-list li:nth-child(6n+1) .album {
-  padding-left: 15%; }
-
 .album-list.row-A li:nth-child(n+1):nth-child(-n+6) {
   background-color: #202f40; }
 
 .album-list li:nth-child(n+7):nth-child(-n+12) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list.row-C li:nth-child(n+13):nth-child(-n+6) {
   background-color: #202f40; }
 
 .album-list li:nth-child(n+19):nth-child(-n+24) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+31):nth-child(-n+36) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+43):nth-child(-n+48) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+55):nth-child(-n+60) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+67):nth-child(-n+72) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+79):nth-child(-n+84) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+91):nth-child(-n+96) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-list li:nth-child(n+103):nth-child(-n+108) {
-  margin-bottom: .3em; }
+  margin-bottom: 0.4em; }
 
 .album-info {
   float: left;

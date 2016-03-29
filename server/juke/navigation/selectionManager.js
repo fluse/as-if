@@ -5,10 +5,10 @@ var Ticker = require('./ticker.js');
 
 class SelectionManager {
 
-    constructor(app, onValiditySelection) {
+    constructor(app, onSelection) {
 
         this.app = app;
-        this.onValiditySelection = onValiditySelection || () => {};
+        this.onSelection = onSelection || () => {};
 
         // create validity ticker instance with
         // validity duration and clear callback
@@ -43,7 +43,7 @@ class SelectionManager {
             }
 
             // cache button behavior
-            this.pressed[buttonMapping[state.pin].type] = buttonMapping[state.pin].count;
+            this.pressed[buttonMapping[state.pin].type] = buttonMapping[state.pin];
         }
     }
 
@@ -56,9 +56,10 @@ class SelectionManager {
 
     onSelectionEnd() {
         console.log('validity %s', this.pressed.first + this.pressed.second);
-        this.onValiditySelection(
-            this.pressed.first + this.pressed.second
-        );
+        this.onSelection({
+            value: this.pressed.first.count + this.pressed.second.count,
+            pressed: this.pressed
+        });
         this.clear();
     }
 

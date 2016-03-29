@@ -1,31 +1,45 @@
-<div class="debug">
+<section class="debug cf">
     <ul class="buttons">
-        <li v-for="button in buttons" v-bind:class="{ 'active': button.state.isPressed}">
-            \{{button.state.pin}}
+        <li v-for="button in state.buttons" v-bind:class="{ 'active': button.state.isPressed}">
+            \{{button.state.name}}
         </li>
     </ul>
-</div>
+    <div class="volume">
+        \{{state.volume}}%
+    </div>
+</section>
 
-<ul class="album-list" v-show="album.current === false">
-    <li v-for="current in album.list">
-        <div class="album">
-            <img :src="current.cover" />
-            <div class="info">
-                <h3>\{{current.albumartist}}</h3>
-                <h4>\{{current.album}}</h4>
+<section class="row">
+    <ul class="album-list" v-show="album.current === false">
+        <li v-for="current in album.list">
+            <div class="album">
+                <img :src="current.cover" />
+                <div class="info">
+                    <h3>\{{current.albumartist}}</h3>
+                    <h4>\{{current.album}}</h4>
+                </div>
             </div>
-        </div>
-    </li>
-</ul>
+        </li>
+    </ul>
+</section>
 
-<ul class="album-track-list" v-show="album.current !== false">
-    <li v-for="track in album.current.tracks">
-        <div class="album">
-            <div class="info">
-                <h3>\{{track.title}}</h3>
-                <h4>\{{current.album}}</h4>
-                <h4>\{{current.duration}}</h4>
+<section class="row">
+
+    <div class="album-info" v-show="album.current !== false">
+        <img :src="album.current.cover" />
+        \{{album.current.albumartist}}
+        \{{album.current.album}}
+    </div>
+
+    <ul class="album-track-list" v-show="album.current !== false">
+        <li v-for="track in album.current.tracks">
+            <div class="album">
+                <div class="info">
+                    <h3>\{{track.title}}</h3>
+                    <h4>\{{current.album}}</h4>
+                    <h4>\{{current.duration}}</h4>
+                </div>
             </div>
-        </div>
-    </li>
-</ul>
+        </li>
+    </ul>
+</section>

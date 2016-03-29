@@ -1,5 +1,5 @@
 'use strict';
-var Navigation = require('./navigation/'),
+var Navigation = require('./navigation/board.js'),
     Scanner = require('./scanner.js');
 
 class Juke {
@@ -27,33 +27,41 @@ class Juke {
         this.scanner.getList();
     }
 
-    onSelection (value) {
+    onSelection (result) {
         if (this.state === 'albumList') {
-            this.prePareAlbum(value);
+            this.prePareAlbum(result.value);
             this.state = 'trackList';
             return;
         }
-        if (value === 1) {
-            this.showAlbumList();
+
+        if (result.pressed.first.name === 'A' && result.value === 1) {
+            return this.showAlbumList();
         }
+
+
+        this.app.config.player.album.activeTrack = this.app.config.player.album.current.tracks[result.value - 1];
+        console.log(this.app.config.player.album.activeTrack);
+        this.sendToDisplay();
     }
 
     showAlbumList() {
         this.state = 'albumList';
         this.app.config.player.album.current = false;
-        this.app.io.sockets.emit('sendAlbum', false);
+        this.app.config.player.album.activeTrack = false;
+        this.sendToDisplay();
     }
 
     sendToDisplay() {
-        console.log('sendToDisplay');
-        this.app.io.sockets.emit('sendAlbums', this.app.config.player.album);
+        console.log('displayUpate');
+        this.app.io.sockets.emit('displayUpate', this.app.config.player.album);
     }
 
     prePareAlbum (value) {
         var album = this.scanner.getAlbum(value - 1);
-        console.log(album);
+
         this.app.config.player.album.current = album;
-        this.app.io.sockets.emit('sendAlbum', this.app.config.player.album.current);
+
+        this.sendToDisplay();
     }
 }
 

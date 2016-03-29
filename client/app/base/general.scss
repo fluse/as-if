@@ -1,7 +1,7 @@
 body {
     font-size: 62.5%;
     min-width: 320px;
-    background-color: $color-background;
+    background-color: #000;
 }
 
 body, input, textarea, select, button {
@@ -27,4 +27,14 @@ li, p, strong, span, h2, h3, h4, h5 {
     height: auto;
     overflow: hidden;
     margin-bottom: 10px;
+}
+
+#page {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 260px;
+    bottom: 0;
+    overflow: hidden;
+    overflow-y: auto;
 }

@@ -1,22 +1,23 @@
-var five = require('johnny-five');
+var five = require('johnny-five'),
+    extend = require('extend');
 
-var Button = function (pin, cb) {
+var Button = function (settings, cb) {
 
-    var button = new five.Button(pin);
+    var button = new five.Button(settings.pin);
 
-    this.state = {
-        pin: pin,
+    this.state = extend(settings, {
         isPressed: false
-    };
+    });
 
     button.on('hold', () => {
-        cb();
+        //cb();
     }).on('press', () => {
         this.state.isPressed = true;
         cb();
     }).on('release', () => {
         this.state.isPressed = false;
         //cb();
+        cb();
     });
 };
 

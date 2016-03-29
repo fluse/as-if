@@ -31,21 +31,24 @@ module.exports = function () {
         ready: function ready() {
             var _this = this;
 
-            this.socket.emit('requireAlbums');
-
-            this.socket.on('sendAlbums', function (list) {
+            this.audio = new Audio();
+            this.socket.on('displayUpate', function (list) {
                 console.log(list);
                 _this.album = list;
+
+                if (list.activeTrack !== false) {
+                    console.log(list.activeTrack.filePath);
+                    _this.audio.pause();
+                    _this.audio = null;
+                    _this.audio = new Audio(list.activeTrack.filePath);
+                    console.log(_this.audio);
+                    _this.audio.play();
+                }
             });
 
-            this.socket.on('sendAlbum', function (album) {
-                console.log(album);
-                _this.album.current = album;
-            });
-
-            this.socket.on('action', function (buttons) {
-                _this.buttons = buttons;
-                console.log(buttons);
+            this.socket.on('getState', function (state) {
+                _this.audio.volume = state.volume / 100;
+                _this.state = state;
             });
         },
 
@@ -70,12 +73,17 @@ var socket = require('socket.io-client')('http://' + window.location.hostname + 
 module.exports = function () {
 
     return extend({
+        audio: null,
         socket: socket,
         album: {
+            activeTrack: {},
             list: [],
             current: false
         },
-        buttons: []
+        state: {
+            buttons: [],
+            volume: 0
+        }
     }, response);
 };
 

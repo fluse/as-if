@@ -39,6 +39,11 @@ app.set('views', 'client/templates/');
 
 // Static Routes
 app.use('/public', express.static('public'));
+// Static Routes
+app.use('/cover', express.static('public/cover'));
+
+// Static Routes
+app.use('/media', express.static('media'));
 
 app.juke = new Juke(app);
 

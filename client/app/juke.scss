@@ -3,54 +3,177 @@
 @import 'base/reset';
 @import 'base/general';
 @import 'base/breakpoints';
+@import 'base/grid';
 
 .debug {
+    display: block;
+    width: 100%;
+    color: #fff;
+    background-color: #0e0e0e;
+    padding: .55em;
+    @extend %cf;
     .buttons {
         float: left;
         display: block;
-        width: 100%;
+        width: auto;
+        padding: .2em .2em;
+        border-radius: 2px;
+        background: #fff;
         li {
+            color: $color-footer;
             padding: .5em;
             font-size: 1.2em;
-            background-color: rgb(180, 180, 180);
+            border-radius: 2px;
 
             &.active {
-                background-color: green;
+                color: #fff;
+                background-color: $color-green;
             }
         }
 
+    }
+
+    .volume {
+        float: right;
+        padding: .5em;
+        font-size: 1.4em;
     }
 }
 
 .album-list {
     li {
-        padding: .2em 0;
+        padding: .3em 0;
         float: left;
-        width: 16.666666667%;
-
+        width: 16%;
+        @extend %cf;
 
         .album {
+            padding-left: 30%;
+            height: 30px;
+            overflow: hidden;
+            display: block;
+            box-sizing: border-box;
+        }
 
-            padding-left: 20%;
+        h2, h3, h4 {
+            color: #908c8c;
+        }
+
+        h3 {
+            display: block;
+            padding-bottom: .2em;
+        }
+
+        h4 {
+            font-weight: 300;
+            font-size: 0.9em;
         }
 
         img {
             float: left;
-            width: 20%;
+            height: 100%;
+            max-width: 20%;
+            opacity: 0.4;
         }
 
         .info {
             font-weight: normal;
-            float: left;
+            float: right;
             width: 80%;
         }
+    }
+
+    li:nth-child(6n+1) {
+
+        .album {
+            padding-left: 15%;
+        }
+    }
+
+
+    // active row a
+    &.row-A {
+        li:nth-child(n+1):nth-child(-n+6) {
+            background-color: #202f40;
+        }
+    }
+
+    // 1-2
+    li:nth-child(n+7):nth-child(-n+12) {
+        margin-bottom: .3em;
+    }
+
+    // active row a
+    &.row-C {
+        li:nth-child(n+13):nth-child(-n+6) {
+            background-color: #202f40;
+        }
+    }
+
+    // 3-4
+    li:nth-child(n+19):nth-child(-n+24) {
+
+        margin-bottom: .3em;
+    }
+
+    // 5-6
+    li:nth-child(n+31):nth-child(-n+36) {
+
+        margin-bottom: .3em;
+    }
+
+    // 7-8
+    li:nth-child(n+43):nth-child(-n+48) {
+
+        margin-bottom: .3em;
+    }
+
+    // 9-10
+    li:nth-child(n+55):nth-child(-n+60) {
+
+        margin-bottom: .3em;
+    }
+
+    // 11-12
+    li:nth-child(n+67):nth-child(-n+72) {
+
+        margin-bottom: .3em;
+    }
+
+    // 13-14
+    li:nth-child(n+79):nth-child(-n+84) {
+
+        margin-bottom: .3em;
+    }
+
+    // 15-16
+    li:nth-child(n+91):nth-child(-n+96) {
+
+        margin-bottom: .3em;
+    }
+
+    // 17-18
+    li:nth-child(n+103):nth-child(-n+108) {
+
+        margin-bottom: .3em;
+    }
+}
+
+.album-info {
+    float: left;
+    width: 16.666666667%;
+
+    img {
+        width: 100%;
     }
 }
 
 .album-track-list {
+    float: left;
+    width: 83.333333333%;
     li {
         padding: .2em 0;
         float: left;
-        width: 16.666666667%;
+        width: 20%;
     }
 }

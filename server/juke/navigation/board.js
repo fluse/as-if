@@ -4,6 +4,7 @@ var five = require('johnny-five');
 var Button = require('./button.js');
 var SelectionManager = require('./SelectionManager.js');
 var Mapping = require('./mapping.js');
+var _ = require('lodash');
 
 class Board {
 
@@ -11,6 +12,8 @@ class Board {
         this.app = app;
         this.buttonList = Mapping;
         this.buttons = [];
+        this.volume = 0;
+
         var board = new five.Board();
         this.lastVolatage = 0;
         this.maxVolateage = 1023;
@@ -34,6 +37,8 @@ class Board {
         ) {
             this.lastVolatage = voltage;
             var percentage = Math.round(Math.abs((voltage / this.maxVolateage * 100) - 100));
+            this.volume = percentage;
+            this.onInput();
             console.log('%s%', percentage);
         }
     }
@@ -43,10 +48,9 @@ class Board {
     }
 
     createButtons () {
-        console.log(this.buttonList);
         for (var button in this.buttonList) {
             try {
-                var current = new Button(button, this.onInput.bind(this));
+                var current = new Button(this.buttonList[button], this.onInput.bind(this));
                 this.buttons.push(current);
             } catch (e) {
                 console.log(e);
@@ -56,7 +60,11 @@ class Board {
     }
 
     onInput () {
-        this.app.io.sockets.emit('action', this.buttons);
+        this.buttons = _.sortBy(this.buttons, function(o) { return o.name; });
+        this.app.io.sockets.emit('getState', {
+            buttons: this.buttons,
+            volume: this.volume
+        });
         this.selectionManager.onInput(this.buttons);
     }
 }

@@ -6,12 +6,17 @@ var socket = require('socket.io-client')('http://' + window.location.hostname + 
 module.exports = function () {
 
     return extend({
+        audio: null,
         socket: socket,
         album: {
+            activeTrack: {},
             list: [],
             current: false
         },
-        buttons: [],
+        state: {
+            buttons: [],
+            volume: 0,
+        }
     }, response);
 
 };

@@ -5,36 +5,39 @@ var fs = require('fs'),
     glob = require('glob'),
     async = require('async'),
     _ = require('lodash'),
-    lwip = require('lwip'),
     path = require('path'),
     fs = require('fs'),
-    jsonfile = require('jsonfile')
+    jsonfile = require('jsonfile');
 
 module.exports = class mp3Scanner {
 
     constructor (app, onFinish) {
         this.app = app;
         this.onFinish = onFinish;
-        this.currentPage = 1;
+        this.currentPage = 3;
         this.chunkSize = 120;
         this.jsonFilePath = './server/juke/albums.json';
         this.list = [];
         jsonfile.spaces = 4;
+
         this.getListfromFileSystem();
-        //this.onFinish();
     }
 
     getListfromFileSystem () {
         jsonfile.readFile(this.jsonFilePath, (err, list) => {
             if (err) {
+                console.log(err);
                 return;
             }
-            this.list = list;
-            this.finish(list);
-      });
+            this.list = list[0];
+            console.log('get list from file');
+            console.log('list pages %s', this.list.length);
+            this.onFinish(this.getList());
+        });
     }
 
     start () {
+        this.list = [];
         // options is optional
         glob(__dirname + '/../../media/**/*.mp3', (er, files) => {
             files.forEach(function(file) {
@@ -46,15 +49,14 @@ module.exports = class mp3Scanner {
             async.eachSeries(files, (file, cb) => {
                 // parse mp3 for id3 tags
                 mp3Parser(fs.createReadStream(file), (err, metadata) => {
-                    if (!err) {
-                        this.saveCover(metadata, () => {
-                            this.mapData(file, metadata);
-                        });
-
-                        console.log('%s - %s', metadata.artist[0], metadata.title);
-                    } else {
+                    if (err) {
                         console.log(err);
+                        return cb();
                     }
+
+                    this.saveCover(metadata, () => {
+                        this.mapData(file, metadata);
+                    });
 
                     cb();
                 });
@@ -64,31 +66,35 @@ module.exports = class mp3Scanner {
                 this.clean();
                 this.sort();
                 this.paginate();
-                this.finish(this.getList());
+                this.finish(this.list);
             });
         });
     }
 
-    finish(list) {
-        jsonfile.writeFile(this.jsonFilePath, list, function (err) {
-            console.error(err)
-        });
-        this.onFinish(list);
+    clean () {
+
     }
 
-    clean () {
-        for (let album in this.list) {
-            if (!this.list[album].hasOwnProperty('tracks') || this.list[album].tracks.length === 0) {
-                delete this.list[album];
+    finish(list) {
+        jsonfile.writeFile(this.jsonFilePath, list, (err) => {
+            if (err) {
+                console.error('write file error %s', JSON.stringify(err));
             }
-        }
+
+            this.onFinish(this.getList());
+        });
     }
 
     sort () {
-        this.list = _.sortBy(this.list, function(o) { return o.albumartist; });
+        this.list = _.sortBy(this.list, function(o) {
+            return o.albumartist;
+        });
     }
 
     getList () {
+        if (this.list.length < this.currentPage) {
+            this.currentPage = 1;
+        }
         var albums = _.cloneDeep(this.list[this.currentPage - 1]);
 
         for (var i = 0; i < albums.length; i++) {
@@ -119,37 +125,71 @@ module.exports = class mp3Scanner {
     mapData (filePath, metadata) {
         //console.log(metadata);
         // is created
-        var result = _.find(this.list, function(o) {
-            return o.albumartist === metadata.artist[0] && o.album === metadata.album;
-        });
-        var artist = metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0];
+        var artist = this.getArtist(metadata);
         var fileName = artist.replace(/[^A-Z0-9/]/ig, '-').toLowerCase() + metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
         var fileFormat = metadata.picture[0].format;
         var imagePath = metadata.picture.length > 0 ? 'cover/' + fileName + '.' + fileFormat : '';
-        if (imagePath === 'cover/.jpg') {
-            console.error(metadata);
-        }
+
+        var result = _.find(this.list, function(o) {
+            return o.albumartist === artist && o.album === metadata.album;
+        });
+
         // remove special chars from filename
         metadata.filePath = '/media/' + filePath.replace(/^.*[\\\/]/, '');
 
+
+        metadata.artist = artist;
         if (metadata.picture) {
+            metadata.picture = null;
             delete metadata.picture;
+            delete metadata.disk;
+            delete metadata.albumartist;
+            metadata.number = metadata.track.no;
+            delete metadata.track;
         }
 
         if (!result) {
-            // create album entry
-            this.list.push({
+
+            var album = {
                 albumartist: artist,
                 album: metadata.album,
                 year: metadata.year,
-                tracks: [metadata],
-                cover: imagePath
-            });
+                cover: imagePath,
+                tracks: [metadata]
+            };
+            console.log('add album %s - %s', album.albumartist, album.album);
+            this.list.push(album);
+            //console.log(JSON.stringify(album));
+            // create album entry
+
         } else {
             // write track to list
-            result.tracks.push(metadata || {});
+            try {
+                var isMatch = _.find(result.tracks, function(o) {
+                    return o.title === metadata.title;
+                });
+                if (!isMatch) {
+                    result.tracks.push(metadata || {});
+
+                    result.tracks = _.sortBy(result.tracks, function(o) {
+                        return o.number;
+                    });
+                }
+            } catch (e) {
+                //console.error('cant push %s', JSON.stringify(result));
+            }
         }
 
+    }
+
+    getArtist(metadata) {
+        if (metadata.albumartist.length) {
+            return metadata.albumartist[0];
+        }
+        if (metadata.artist.length) {
+            return metadata.artist[0];
+        }
+        return 'no artist name defined';
     }
 
     saveCover (metadata, cb) {
@@ -158,7 +198,7 @@ module.exports = class mp3Scanner {
             var artist = metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0];
             // generate cover filename
             var fileName = artist.replace(/[^A-Z0-9/]/ig, '-').toLowerCase() + metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
-            fileName = fileName.replace('/\//ig', '');
+            fileName = fileName.replace(/\//ig, '');
             // generate cover full path
             var fileNameAndPath = __dirname + '/../../public/cover/' + fileName + '.' + metadata.picture[0].format;
             var coverData = metadata.picture[0].data;
@@ -167,27 +207,6 @@ module.exports = class mp3Scanner {
                     throw (err);
                 }
                 cb();
-            });
-            return;
-            lwip.open(coverData, metadata.picture[0].format, function(err, image) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-
-                if (metadata.picture) {
-                    delete metadata.picture;
-                }
-
-                try {
-                    image.batch().crop(150, 150).writeFile(fileNameAndPath, function(err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                } catch (e) {
-
-                }
             });
 
         }

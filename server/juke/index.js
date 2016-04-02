@@ -52,8 +52,6 @@ class Juke {
 
     onSelection (result) {
 
-
-
         if (this.checkPaginationAction(result)) {
             return;
         }

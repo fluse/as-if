@@ -16,7 +16,8 @@ class Board {
 
         var board = new five.Board();
         this.lastVolatage = 0;
-        this.maxVolateage = 1023;
+        this.maxVolatage = 1023;
+        this.minVoltage = 330;
         this.selectionManager = new SelectionManager(app, hooks.onSelection);
 
         var self = this;
@@ -31,15 +32,16 @@ class Board {
     }
 
     convertVolumePegel(voltage) {
+
         if (this.lastVolatage !== voltage &&
             this.lastVolatage !== (voltage - 1) &&
             this.lastVolatage !== (voltage + 1)
         ) {
             this.lastVolatage = voltage;
-            var percentage = Math.round(Math.abs((voltage / this.maxVolateage * 100) - 100));
+            var percentage = Math.round(Math.abs((voltage / this.maxVolatage * 100) - 100));
             this.volume = percentage;
             this.onInput();
-            console.log('%s%', percentage);
+            //console.log('%s%', percentage);
         }
     }
 
@@ -61,11 +63,14 @@ class Board {
 
     onInput () {
         this.buttons = _.sortBy(this.buttons, function(o) { return o.name; });
+
+        this.selectionManager.onInput(this.buttons);
+
         this.app.io.sockets.emit('getState', {
             buttons: this.buttons,
-            volume: this.volume
+            volume: this.volume,
+            pressed: this.selectionManager.pressed
         });
-        this.selectionManager.onInput(this.buttons);
     }
 }
 

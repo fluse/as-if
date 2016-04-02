@@ -5,6 +5,36 @@
 @import 'base/breakpoints';
 @import 'base/grid';
 
+h1 {
+    position: fixed;
+    top: 190px;
+    left: 0;
+    width: 100%;
+    font-size: .9rem;
+    text-align: center;
+    opacity: 0.3;
+
+    small {
+        color: #fff;
+        font-weight: 300;
+        font-size: 0.9em;
+    }
+
+    strong {
+        font-weight: 300;
+        display: inline-block;
+        padding: 0 2em;
+    }
+
+    .heart {
+        position: relative;
+        top: 3px;
+        font-size: 1.8em;
+        padding: 0 0 0 .1em;
+        color: rgb(142, 18, 18);
+    }
+}
+
 .debug {
     display: block;
     width: 100%;
@@ -47,6 +77,8 @@
         width: 16%;
         @extend %cf;
 
+        transition: background-color .5s;
+
         .album {
             height: 30px;
             overflow: hidden;
@@ -82,14 +114,21 @@
         }
     }
 
+    $highlight: #3A391D;
+    $rowGap: .4em;
+
     // active row a
-    &.row-A {
+    &.A {
         li:nth-child(n+1):nth-child(-n+6) {
-            background-color: #202f40;
+            background-color: $highlight;
         }
     }
 
-    $rowGap: .4em;
+    &.B {
+        li:nth-child(n+7):nth-child(-n+12) {
+            background-color: $highlight;
+        }
+    }
 
     // 1-2
     li:nth-child(n+7):nth-child(-n+12) {
@@ -97,9 +136,15 @@
     }
 
     // active row a
-    &.row-C {
-        li:nth-child(n+13):nth-child(-n+6) {
-            background-color: #202f40;
+    &.C {
+        li:nth-child(n+13):nth-child(-n+18) {
+            background-color: $highlight;
+        }
+    }
+
+    &.D {
+        li:nth-child(n+19):nth-child(-n+24) {
+            background-color: $highlight;
         }
     }
 
@@ -108,9 +153,33 @@
         margin-bottom: $rowGap;
     }
 
+    &.E {
+        li:nth-child(n+25):nth-child(-n+30) {
+            background-color: $highlight;
+        }
+    }
+
+    &.F {
+        li:nth-child(n+31):nth-child(-n+36) {
+            background-color: $highlight;
+        }
+    }
+
     // 5-6
     li:nth-child(n+31):nth-child(-n+36) {
         margin-bottom: $rowGap;
+    }
+
+    &.G {
+        li:nth-child(n+37):nth-child(-n+42) {
+            background-color: $highlight;
+        }
+    }
+
+    &.H {
+        li:nth-child(n+43):nth-child(-n+48) {
+            background-color: $highlight;
+        }
     }
 
     // 7-8
@@ -118,9 +187,33 @@
         margin-bottom: $rowGap;
     }
 
+    &.J {
+        li:nth-child(n+49):nth-child(-n+54) {
+            background-color: $highlight;
+        }
+    }
+
+    &.K {
+        li:nth-child(n+55):nth-child(-n+60) {
+            background-color: $highlight;
+        }
+    }
+
     // 9-10
     li:nth-child(n+55):nth-child(-n+60) {
         margin-bottom: $rowGap;
+    }
+
+    &.L {
+        li:nth-child(n+61):nth-child(-n+66) {
+            background-color: $highlight;
+        }
+    }
+
+    &.M {
+        li:nth-child(n+67):nth-child(-n+72) {
+            background-color: $highlight;
+        }
     }
 
     // 11-12
@@ -128,9 +221,33 @@
         margin-bottom: $rowGap;
     }
 
+    &.N {
+        li:nth-child(n+73):nth-child(-n+78) {
+            background-color: $highlight;
+        }
+    }
+
+    &.P {
+        li:nth-child(n+79):nth-child(-n+84) {
+            background-color: $highlight;
+        }
+    }
+
     // 13-14
     li:nth-child(n+79):nth-child(-n+84) {
         margin-bottom: $rowGap;
+    }
+
+    &.Q {
+        li:nth-child(n+85):nth-child(-n+90) {
+            background-color: $highlight;
+        }
+    }
+
+    &.R {
+        li:nth-child(n+91):nth-child(-n+96) {
+            background-color: $highlight;
+        }
     }
 
     // 15-16
@@ -138,9 +255,33 @@
         margin-bottom: $rowGap;
     }
 
+    &.S {
+        li:nth-child(n+97):nth-child(-n+102) {
+            background-color: $highlight;
+        }
+    }
+
+    &.T {
+        li:nth-child(n+103):nth-child(-n+108) {
+            background-color: $highlight;
+        }
+    }
+
     // 17-18
     li:nth-child(n+103):nth-child(-n+108) {
         margin-bottom: $rowGap;
+    }
+
+    &.U {
+        li:nth-child(n+109):nth-child(-n+114) {
+            background-color: $highlight;
+        }
+    }
+
+    &.V {
+        li:nth-child(n+115):nth-child(-n+120) {
+            background-color: $highlight;
+        }
     }
 }
 

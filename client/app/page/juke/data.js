@@ -16,6 +16,14 @@ module.exports = function () {
         state: {
             buttons: [],
             volume: 0,
+            pressed: {
+                first: {
+                    name: ''
+                },
+                second: {
+                    name: ''
+                }
+            }
         }
     }, response);
 

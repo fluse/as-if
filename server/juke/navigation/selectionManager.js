@@ -9,10 +9,15 @@ class SelectionManager {
 
         this.app = app;
         this.onSelection = onSelection || () => {};
-
+        this.isPaginationActive = true;
         // create validity ticker instance with
         // validity duration and clear callback
-        this.ticker = new Ticker(3, this.clear.bind(this));
+        this.ticker = new Ticker(8, this.clear.bind(this));
+
+        this.tickerPagination = new Ticker(0.8, () => {
+            console.log('isPaginationActive to active');
+            this.isPaginationActive = true;
+        });
 
         this.pressed = {
             first: null,
@@ -42,28 +47,47 @@ class SelectionManager {
                 this.ticker.abort().start();
             }
 
+            // check special behavior buttons
+
+            if (buttonMapping[state.pin].type === 'pageNext' || buttonMapping[state.pin].type === 'pagePrevous') {
+                this.pressed.first = buttonMapping[state.pin];
+                this.pressed.second = null;
+
+                if (this.isPaginationActive) {
+                    this.tickerPagination.start();
+
+                    return this.onSelectionEnd();
+                }
+                return;
+            }
+
             // cache button behavior
             this.pressed[buttonMapping[state.pin].type] = buttonMapping[state.pin];
+            if (buttonMapping[state.pin].type === 'first') {
+                this.pressed.second = null;
+            }
+
         }
     }
 
     checkForValiditySelection() {
-        console.log(this.pressed);
+        //console.log(this.pressed);
         if (this.pressed.first !== null && this.pressed.second !== null) {
             this.onSelectionEnd();
         }
     }
 
     onSelectionEnd() {
-        console.log('validity %s', this.pressed.first + this.pressed.second);
+        //console.log('validity %s', this.pressed.first + this.pressed.second);
         this.onSelection({
-            value: this.pressed.first.count + this.pressed.second.count,
+            value: this.pressed.first.count + this.pressed.second.hasOwnProperty('count') ? this.pressed.second.count : 0,
             pressed: this.pressed
         });
         this.clear();
     }
 
     clear() {
+        this.ticker.abort();
         this.pressed = {
             first: null,
             second: null

@@ -1,16 +1,22 @@
+<h1>
+    <small>made with love</small>
+    <strong class="heart">&#9829;</strong>
+    <strong>Jan Müller</strong>
+    <strong>Holger Schauf</strong>
+</h1>
+
 <section class="debug cf">
     <ul class="buttons">
         <li v-for="button in state.buttons" v-bind:class="{ 'active': button.state.isPressed}">
-            \{{button.state.name}}
+            \{{button.state.name}} \{{button.state.pin}}
         </li>
     </ul>
     <div class="volume">
         \{{state.volume}}%
     </div>
 </section>
-
 <section class="row">
-    <ul class="album-list cf" v-show="album.current === false">
+    <ul class="album-list cf \{{state.pressed.first && state.pressed.first.name ? state.pressed.first.name : ''}} " v-show="album.current === false">
         <li v-for="current in album.list">
             <div class="album">
                 <img :src="current.cover" />

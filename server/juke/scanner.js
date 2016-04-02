@@ -70,18 +70,26 @@ module.exports = class mp3Scanner {
 
     getList () {
         var albums = _.cloneDeep(this.list[this.currentPage - 1]);
-        for (let album of albums) {
-            delete album.tracks;
+
+        for (var i = 0; i < albums.length; i++) {
+            delete albums[i].tracks;
         }
 
         return albums;
     }
 
     getAlbum (pos) {
-        if (this.list[this.currentPage - 1].length > pos) {
+        try {
+            var list = this.list[this.currentPage - 1];
+
+            if (list.length < pos || pos < 0) {
+                return false;
+            }
+
+            return list[pos];
+        } catch (e) {
             return false;
         }
-        return this.list[this.currentPage - 1][pos];
     }
 
     paginate () {

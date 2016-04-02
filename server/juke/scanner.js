@@ -29,7 +29,7 @@ module.exports = class mp3Scanner {
                 console.log(err);
                 return;
             }
-            this.list = list[0];
+            this.list = list;
             console.log('get list from file');
             console.log('list pages %s', this.list.length);
             this.onFinish(this.getList());
@@ -80,9 +80,9 @@ module.exports = class mp3Scanner {
             if (err) {
                 console.error('write file error %s', JSON.stringify(err));
             }
-
-            this.onFinish(this.getList());
         });
+
+        this.onFinish(this.getList());
     }
 
     sort () {

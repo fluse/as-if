@@ -41,6 +41,7 @@
     "grunt-sass": "1.1.0-beta",
     "grunt-shell": "^1.1.2",
     "johnny-five": "^0.9.30",
+    "jsonfile": "^2.2.3",
     "load-grunt-tasks": "^0.6.0",
     "lodash": "^4.0.0",
     "lwip": "0.0.8",

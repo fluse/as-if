@@ -7,4 +7,11 @@ module.exports = function (app) {
         }, {} /* data object */);
     });
 
+    app.get('/generate', (req, res) => {
+
+        app.juke.scanner.start();
+
+        res.redirect('/');
+    });
+
 };

@@ -7,7 +7,8 @@ var fs = require('fs'),
     _ = require('lodash'),
     lwip = require('lwip'),
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    jsonfile = require('jsonfile')
 
 module.exports = class mp3Scanner {
 
@@ -16,9 +17,21 @@ module.exports = class mp3Scanner {
         this.onFinish = onFinish;
         this.currentPage = 1;
         this.chunkSize = 120;
+        this.jsonFilePath = './server/juke/albums.json';
         this.list = [];
-        this.start();
+        jsonfile.spaces = 4;
+        this.getListfromFileSystem();
         //this.onFinish();
+    }
+
+    getListfromFileSystem () {
+        jsonfile.readFile(this.jsonFilePath, (err, list) => {
+            if (err) {
+                return;
+            }
+            this.list = list;
+            this.finish(list);
+      });
     }
 
     start () {
@@ -51,9 +64,16 @@ module.exports = class mp3Scanner {
                 this.clean();
                 this.sort();
                 this.paginate();
-                this.onFinish(this.getList());
+                this.finish(this.getList());
             });
         });
+    }
+
+    finish(list) {
+        jsonfile.writeFile(this.jsonFilePath, list, function (err) {
+            console.error(err)
+        });
+        this.onFinish(list);
     }
 
     clean () {
@@ -112,9 +132,10 @@ module.exports = class mp3Scanner {
         // remove special chars from filename
         metadata.filePath = '/media/' + filePath.replace(/^.*[\\\/]/, '');
 
-        if (imagePath === 'cover/.jpg') {
-            return;
+        if (metadata.picture) {
+            delete metadata.picture;
         }
+
         if (!result) {
             // create album entry
             this.list.push({
@@ -125,9 +146,6 @@ module.exports = class mp3Scanner {
                 cover: imagePath
             });
         } else {
-            if (metadata.picture) {
-                delete metadata.picture;
-            }
             // write track to list
             result.tracks.push(metadata || {});
         }
@@ -138,7 +156,10 @@ module.exports = class mp3Scanner {
 
         if (metadata.picture.length > 0) {
             var artist = metadata.albumartist.length > 0 ? metadata.albumartist[0] : metadata.artist[0];
+            // generate cover filename
             var fileName = artist.replace(/[^A-Z0-9/]/ig, '-').toLowerCase() + metadata.album.replace(/[^A-Z0-9/]/ig, '-').toLowerCase();
+            fileName = fileName.replace('/\//ig', '');
+            // generate cover full path
             var fileNameAndPath = __dirname + '/../../public/cover/' + fileName + '.' + metadata.picture[0].format;
             var coverData = metadata.picture[0].data;
             fs.writeFile(fileNameAndPath, coverData, function (err) {

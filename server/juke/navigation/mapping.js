@@ -1,16 +1,16 @@
 module.exports = {
-    '53': {
-        pin: 53,
+    '12': {
+        pin: 12,
         count: 0,
         name: 'A',
         type: 'first'
     },
-    '51': {
-        pin: 51,
+    '9': {
+        pin: 9,
         count: 6,
         name: 'B',
         type: 'first'
-    },
+    }/*,
     '49': {
         pin: 49,
         count: 12,
@@ -168,4 +168,5 @@ module.exports = {
         name: 'pagePrevous',
         type: 'pagePrevous'
     }
+    */
 };

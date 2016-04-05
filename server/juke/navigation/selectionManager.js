@@ -26,7 +26,7 @@ class SelectionManager {
     }
 
     onInput(buttons) {
-
+        console.log(buttons);
         // check pressed button
         for (var button of buttons) {
             this.checkForPressed(

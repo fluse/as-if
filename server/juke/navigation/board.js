@@ -2,7 +2,7 @@
 
 var five = require('johnny-five');
 var Button = require('./button.js');
-var SelectionManager = require('./SelectionManager.js');
+var SelectionManager = require(__dirname + '/SelectionManager.js');
 var Mapping = require('./mapping.js');
 var _ = require('lodash');
 

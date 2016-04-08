@@ -2,7 +2,7 @@
   "name": "as-if",
   "version": "1.0.0",
   "description": "mediafile jukebox",
-  "main": "--harmony server/start.js",
+  "main": "node --harmony server/start.js",
   "scripts": {
     "postinstall": "cd scripts/ && sh compile.sh",
     "start": "node test.js",

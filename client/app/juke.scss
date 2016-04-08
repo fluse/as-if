@@ -4,10 +4,11 @@
 @import 'base/general';
 @import 'base/breakpoints';
 @import 'base/grid';
+$highlight: #3A391D;
 
 h1 {
     position: fixed;
-    top: 190px;
+    top: 200px;
     left: 0;
     width: 100%;
     font-size: .9rem;
@@ -71,11 +72,38 @@ h1 {
 }
 
 .album-list {
+    padding: 0 20px;
+
     li {
+        width: 10%;
         padding: .3em 0;
         float: left;
-        width: 16%;
         @extend %cf;
+
+        &:nth-child(6n+1) {
+            width: 17.8%;
+            //background-color: green;
+        }
+
+        &:nth-child(6n+2) {
+            width: 18%;
+            //background-color:blue;
+        }
+
+        &:nth-child(6n+3) {
+            width: 17.8%;
+            //background-color:red;
+        }
+
+        &:nth-child(6n+4) {
+            width: 18%;
+            //background-color:yellow;
+        }
+
+        &:nth-child(6n+5) {
+            width: 17.7%;
+            //background-color:pink;
+        }
 
         transition: background-color .5s;
 
@@ -109,12 +137,12 @@ h1 {
 
         .info {
             font-weight: normal;
-            float: right;
+            float: left;
+            padding-left: .8em;
             width: 80%;
         }
     }
 
-    $highlight: #3A391D;
     $rowGap: .4em;
 
     // active row a
@@ -132,7 +160,7 @@ h1 {
 
     // 1-2
     li:nth-child(n+7):nth-child(-n+12) {
-        margin-bottom: $rowGap;
+        margin-bottom: 6px;
     }
 
     // active row a
@@ -150,7 +178,7 @@ h1 {
 
     // 3-4
     li:nth-child(n+19):nth-child(-n+24) {
-        margin-bottom: $rowGap;
+        margin-bottom: 9px;
     }
 
     &.E {
@@ -167,7 +195,7 @@ h1 {
 
     // 5-6
     li:nth-child(n+31):nth-child(-n+36) {
-        margin-bottom: $rowGap;
+        margin-bottom: 8px;
     }
 
     &.G {
@@ -184,7 +212,7 @@ h1 {
 
     // 7-8
     li:nth-child(n+43):nth-child(-n+48) {
-        margin-bottom: $rowGap;
+        margin-bottom: 8px;
     }
 
     &.J {
@@ -201,7 +229,7 @@ h1 {
 
     // 9-10
     li:nth-child(n+55):nth-child(-n+60) {
-        margin-bottom: $rowGap;
+        margin-bottom: 8px;
     }
 
     &.L {
@@ -218,7 +246,7 @@ h1 {
 
     // 11-12
     li:nth-child(n+67):nth-child(-n+72) {
-        margin-bottom: $rowGap;
+        margin-bottom: 8px;
     }
 
     &.N {
@@ -235,7 +263,7 @@ h1 {
 
     // 13-14
     li:nth-child(n+79):nth-child(-n+84) {
-        margin-bottom: $rowGap;
+        margin-bottom: 10px;
     }
 
     &.Q {
@@ -252,7 +280,7 @@ h1 {
 
     // 15-16
     li:nth-child(n+91):nth-child(-n+96) {
-        margin-bottom: $rowGap;
+        margin-bottom: 10px;
     }
 
     &.S {
@@ -269,7 +297,7 @@ h1 {
 
     // 17-18
     li:nth-child(n+103):nth-child(-n+108) {
-        margin-bottom: $rowGap;
+        margin-bottom: 6px;
     }
 
     &.U {
@@ -287,19 +315,88 @@ h1 {
 
 .album-info {
     float: left;
-    width: 16.666666667%;
+    width: 19%;
+    padding: 0 120px 0 25px;
+
+    .back {
+        font-size: 1.8em;
+        padding-top: .6em;
+        height: 40px;
+        background-color: $highlight;
+        display: block;
+        margin-bottom: .4em;
+    }
 
     img {
+        opacity: 0.4;
         width: 100%;
+        margin-bottom: 2em;
+    }
+
+    h3, h4, strong, .back {
+        color: #908c8c;
+        text-align: center;
+        width: 100%;
+    }
+
+    h3 {
+        font-size: 1.8em;
+        padding-bottom: 1em;
+    }
+
+    h4 {
+        font-size: 1.3em;
+        font-weight: 300;
+        padding-bottom: .4em;
+    }
+
+    strong {
+        color: #e4dfdf;
+        font-size: 1.1em;
+        font-weight: 300;
     }
 }
 
 .album-track-list {
     float: left;
-    width: 83.333333333%;
+    width: 81%;
     li {
+
+        padding: .3em 0;
+
+        h3 {
+            color: #908c8c;
+            font-size: 1.3em;
+            height: 30px;
+            padding-top: .6em;
+        }
+
         padding: .2em 0;
         float: left;
-        width: 20%;
+        width: 10%;
+
+        &:nth-child(5n+1) {
+            width: 21.3%;
+            //background-color: green;
+        }
+
+        &:nth-child(5n+2) {
+            width: 21.3%;
+            //background-color: green;
+        }
+
+        &:nth-child(5n+3) {
+            width: 22%;
+            //background-color: green;
+        }
+
+        &:nth-child(5n+4) {
+            width: 22%;
+            //background-color: green;
+        }
+
+        &:nth-child(n+6):nth-child(-n+10) {
+            margin-bottom: 6px;
+        }
     }
 }

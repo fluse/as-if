@@ -93,7 +93,7 @@ li, p, strong, span, h2, h3, h4, h5 {
   position: absolute;
   left: 0;
   right: 0;
-  top: 260px;
+  top: 238px;
   bottom: 0;
   overflow: hidden;
   overflow-y: auto; }
@@ -278,7 +278,7 @@ li, p, strong, span, h2, h3, h4, h5 {
 
 h1 {
   position: fixed;
-  top: 190px;
+  top: 200px;
   left: 0;
   width: 100%;
   font-size: .9rem;
@@ -325,131 +325,156 @@ h1 {
     padding: .5em;
     font-size: 1.4em; }
 
-.album-list li {
-  padding: .3em 0;
-  float: left;
-  width: 16%;
-  transition: background-color .5s; }
-  .album-list li .album {
-    height: 30px;
-    overflow: hidden;
-    display: block;
-    box-sizing: border-box; }
-  .album-list li h2, .album-list li h3, .album-list li h4 {
-    color: #908c8c; }
-  .album-list li h3 {
-    display: block;
-    padding-bottom: .2em; }
-  .album-list li h4 {
-    font-weight: 300;
-    font-size: 0.9em; }
-  .album-list li img {
+.album-list {
+  padding: 0 20px; }
+  .album-list li {
+    width: 10%;
+    padding: .3em 0;
     float: left;
-    height: 100%;
-    max-width: 20%;
-    opacity: 0.4; }
-  .album-list li .info {
-    font-weight: normal;
-    float: right;
-    width: 80%; }
-
-.album-list.A li:nth-child(n+1):nth-child(-n+6) {
-  background-color: #3A391D; }
-
-.album-list.B li:nth-child(n+7):nth-child(-n+12) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+7):nth-child(-n+12) {
-  margin-bottom: 0.4em; }
-
-.album-list.C li:nth-child(n+13):nth-child(-n+18) {
-  background-color: #3A391D; }
-
-.album-list.D li:nth-child(n+19):nth-child(-n+24) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+19):nth-child(-n+24) {
-  margin-bottom: 0.4em; }
-
-.album-list.E li:nth-child(n+25):nth-child(-n+30) {
-  background-color: #3A391D; }
-
-.album-list.F li:nth-child(n+31):nth-child(-n+36) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+31):nth-child(-n+36) {
-  margin-bottom: 0.4em; }
-
-.album-list.G li:nth-child(n+37):nth-child(-n+42) {
-  background-color: #3A391D; }
-
-.album-list.H li:nth-child(n+43):nth-child(-n+48) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+43):nth-child(-n+48) {
-  margin-bottom: 0.4em; }
-
-.album-list.J li:nth-child(n+49):nth-child(-n+54) {
-  background-color: #3A391D; }
-
-.album-list.K li:nth-child(n+55):nth-child(-n+60) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+55):nth-child(-n+60) {
-  margin-bottom: 0.4em; }
-
-.album-list.L li:nth-child(n+61):nth-child(-n+66) {
-  background-color: #3A391D; }
-
-.album-list.M li:nth-child(n+67):nth-child(-n+72) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+67):nth-child(-n+72) {
-  margin-bottom: 0.4em; }
-
-.album-list.N li:nth-child(n+73):nth-child(-n+78) {
-  background-color: #3A391D; }
-
-.album-list.P li:nth-child(n+79):nth-child(-n+84) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+79):nth-child(-n+84) {
-  margin-bottom: 0.4em; }
-
-.album-list.Q li:nth-child(n+85):nth-child(-n+90) {
-  background-color: #3A391D; }
-
-.album-list.R li:nth-child(n+91):nth-child(-n+96) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+91):nth-child(-n+96) {
-  margin-bottom: 0.4em; }
-
-.album-list.S li:nth-child(n+97):nth-child(-n+102) {
-  background-color: #3A391D; }
-
-.album-list.T li:nth-child(n+103):nth-child(-n+108) {
-  background-color: #3A391D; }
-
-.album-list li:nth-child(n+103):nth-child(-n+108) {
-  margin-bottom: 0.4em; }
-
-.album-list.U li:nth-child(n+109):nth-child(-n+114) {
-  background-color: #3A391D; }
-
-.album-list.V li:nth-child(n+115):nth-child(-n+120) {
-  background-color: #3A391D; }
+    transition: background-color .5s; }
+    .album-list li:nth-child(6n+1) {
+      width: 17.8%; }
+    .album-list li:nth-child(6n+2) {
+      width: 18%; }
+    .album-list li:nth-child(6n+3) {
+      width: 17.8%; }
+    .album-list li:nth-child(6n+4) {
+      width: 18%; }
+    .album-list li:nth-child(6n+5) {
+      width: 17.7%; }
+    .album-list li .album {
+      height: 30px;
+      overflow: hidden;
+      display: block;
+      box-sizing: border-box; }
+    .album-list li h2, .album-list li h3, .album-list li h4 {
+      color: #908c8c; }
+    .album-list li h3 {
+      display: block;
+      padding-bottom: .2em; }
+    .album-list li h4 {
+      font-weight: 300;
+      font-size: 0.9em; }
+    .album-list li img {
+      float: left;
+      height: 100%;
+      max-width: 20%;
+      opacity: 0.4; }
+    .album-list li .info {
+      font-weight: normal;
+      float: left;
+      padding-left: .8em;
+      width: 80%; }
+  .album-list.A li:nth-child(n+1):nth-child(-n+6) {
+    background-color: #3A391D; }
+  .album-list.B li:nth-child(n+7):nth-child(-n+12) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+7):nth-child(-n+12) {
+    margin-bottom: 6px; }
+  .album-list.C li:nth-child(n+13):nth-child(-n+18) {
+    background-color: #3A391D; }
+  .album-list.D li:nth-child(n+19):nth-child(-n+24) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+19):nth-child(-n+24) {
+    margin-bottom: 9px; }
+  .album-list.E li:nth-child(n+25):nth-child(-n+30) {
+    background-color: #3A391D; }
+  .album-list.F li:nth-child(n+31):nth-child(-n+36) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+31):nth-child(-n+36) {
+    margin-bottom: 8px; }
+  .album-list.G li:nth-child(n+37):nth-child(-n+42) {
+    background-color: #3A391D; }
+  .album-list.H li:nth-child(n+43):nth-child(-n+48) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+43):nth-child(-n+48) {
+    margin-bottom: 8px; }
+  .album-list.J li:nth-child(n+49):nth-child(-n+54) {
+    background-color: #3A391D; }
+  .album-list.K li:nth-child(n+55):nth-child(-n+60) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+55):nth-child(-n+60) {
+    margin-bottom: 8px; }
+  .album-list.L li:nth-child(n+61):nth-child(-n+66) {
+    background-color: #3A391D; }
+  .album-list.M li:nth-child(n+67):nth-child(-n+72) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+67):nth-child(-n+72) {
+    margin-bottom: 8px; }
+  .album-list.N li:nth-child(n+73):nth-child(-n+78) {
+    background-color: #3A391D; }
+  .album-list.P li:nth-child(n+79):nth-child(-n+84) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+79):nth-child(-n+84) {
+    margin-bottom: 10px; }
+  .album-list.Q li:nth-child(n+85):nth-child(-n+90) {
+    background-color: #3A391D; }
+  .album-list.R li:nth-child(n+91):nth-child(-n+96) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+91):nth-child(-n+96) {
+    margin-bottom: 10px; }
+  .album-list.S li:nth-child(n+97):nth-child(-n+102) {
+    background-color: #3A391D; }
+  .album-list.T li:nth-child(n+103):nth-child(-n+108) {
+    background-color: #3A391D; }
+  .album-list li:nth-child(n+103):nth-child(-n+108) {
+    margin-bottom: 6px; }
+  .album-list.U li:nth-child(n+109):nth-child(-n+114) {
+    background-color: #3A391D; }
+  .album-list.V li:nth-child(n+115):nth-child(-n+120) {
+    background-color: #3A391D; }
 
 .album-info {
   float: left;
-  width: 16.666666667%; }
+  width: 19%;
+  padding: 0 120px 0 25px; }
+  .album-info .back {
+    font-size: 1.8em;
+    padding-top: .6em;
+    height: 40px;
+    background-color: #3A391D;
+    display: block;
+    margin-bottom: .4em; }
   .album-info img {
+    opacity: 0.4;
+    width: 100%;
+    margin-bottom: 2em; }
+  .album-info h3, .album-info h4, .album-info strong, .album-info .back {
+    color: #908c8c;
+    text-align: center;
     width: 100%; }
+  .album-info h3 {
+    font-size: 1.8em;
+    padding-bottom: 1em; }
+  .album-info h4 {
+    font-size: 1.3em;
+    font-weight: 300;
+    padding-bottom: .4em; }
+  .album-info strong {
+    color: #e4dfdf;
+    font-size: 1.1em;
+    font-weight: 300; }
 
 .album-track-list {
   float: left;
-  width: 83.333333333%; }
+  width: 81%; }
   .album-track-list li {
+    padding: .3em 0;
     padding: .2em 0;
     float: left;
-    width: 20%; }
+    width: 10%; }
+    .album-track-list li h3 {
+      color: #908c8c;
+      font-size: 1.3em;
+      height: 30px;
+      padding-top: .6em; }
+    .album-track-list li:nth-child(5n+1) {
+      width: 21.3%; }
+    .album-track-list li:nth-child(5n+2) {
+      width: 21.3%; }
+    .album-track-list li:nth-child(5n+3) {
+      width: 22%; }
+    .album-track-list li:nth-child(5n+4) {
+      width: 22%; }
+    .album-track-list li:nth-child(n+6):nth-child(-n+10) {
+      margin-bottom: 6px; }

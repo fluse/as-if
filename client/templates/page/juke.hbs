@@ -5,7 +5,7 @@
     <strong>Holger Schauf</strong>
 </h1>
 
-<section class="debug cf">
+<section class="debug cf" style="visibility:hidden">
     <ul class="buttons">
         <li v-for="button in state.buttons" v-bind:class="{ 'active': button.state.isPressed}">
             \{{button.state.name}} \{{button.state.pin}}
@@ -32,9 +32,15 @@
 <section class="row">
 
     <div class="album-info" v-show="album.current !== false">
+
+        <span class="back">A1 für zurück</span>
+
         <img :src="album.current.cover" />
-        \{{album.current.albumartist}}
-        \{{album.current.album}}
+
+        <h3>\{{album.current.albumartist}}</h3>
+        <h4>\{{album.current.album}}</h4>
+
+        <strong>\{{album.current.tracks.length}} Songs</strong>
     </div>
 
     <ul class="album-track-list" v-show="album.current !== false">

@@ -26,7 +26,6 @@ class SelectionManager {
     }
 
     onInput(buttons) {
-        console.log(buttons);
         // check pressed button
         for (var button of buttons) {
             this.checkForPressed(
@@ -40,7 +39,7 @@ class SelectionManager {
     checkForPressed(state) {
 
         if (state.isPressed) {
-
+            console.log(state);
             // set time
             if (buttonMapping[state.pin].type === 'first') {
                 // start validity timer

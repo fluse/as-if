@@ -33,7 +33,6 @@ module.exports = function () {
 
             this.audio = new Audio();
             this.socket.on('displayUpate', function (list) {
-                console.log(list);
                 _this.album = list;
 
                 if (list.activeTrack !== false) {

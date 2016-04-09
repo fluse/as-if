@@ -39,7 +39,7 @@ class SelectionManager {
     checkForPressed(state) {
 
         if (state.isPressed) {
-            console.log(state);
+
             // set time
             if (buttonMapping[state.pin].type === 'first') {
                 // start validity timer

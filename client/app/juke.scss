@@ -363,7 +363,9 @@ h1 {
     li {
 
         padding: .3em 0;
-
+        &.active {
+            background-color: $highlight;
+        }
         h3 {
             color: #908c8c;
             font-size: 1.3em;

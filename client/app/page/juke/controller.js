@@ -12,7 +12,6 @@ module.exports = function () {
         ready () {
             this.audio = new Audio();
             this.socket.on('displayUpate', (list) => {
-                console.log(list);
                 this.album = list;
 
                 if (list.activeTrack !== false) {

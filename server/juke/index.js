@@ -56,7 +56,7 @@ class Juke {
             return;
         }
 
-        console.log(result.pressed);
+        console.log(result);
 
         if (this.playTrackIfAlbumIsSet(result)) {
             console.log('playTrackIfCurrentIsSet');
@@ -92,10 +92,11 @@ class Juke {
 
             var track = this.app.config.player.album.activeTrack;
 
-            track = album.tracks[result.value - 2];
+            this.app.config.player.album.activeTrack = album.tracks[result.value - 2];
             console.log('tracklist length %s', album.tracks.length);
             console.log('track position %s', result.value - 2);
             console.log(track);
+            this.sendToDisplay();
 
             return true;
         }

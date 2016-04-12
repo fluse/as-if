@@ -31,11 +31,22 @@ module.exports = function () {
         ready: function ready() {
             var _this = this;
 
+            this.audio = new Audio();
             this.socket.on('displayUpate', function (list) {
                 _this.album = list;
+
+                if (list.activeTrack !== false) {
+                    console.log(list.activeTrack.filePath);
+                    _this.audio.pause();
+                    _this.audio = null;
+                    _this.audio = new Audio(list.activeTrack.filePath);
+                    console.log(_this.audio);
+                    _this.audio.play();
+                }
             });
 
             this.socket.on('getState', function (state) {
+                _this.audio.volume = state.volume / 100;
                 _this.state = state;
             });
         },

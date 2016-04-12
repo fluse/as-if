@@ -77,9 +77,10 @@ class SelectionManager {
     }
 
     onSelectionEnd() {
-        //console.log('validity %s', this.pressed.first + this.pressed.second);
+        var first = this.pressed.first.count;
+        var second = typeof this.pressed.second !== undefined && this.pressed.second !== null && this.pressed.second.hasOwnProperty('count') ? this.pressed.second.count : 0;
         this.onSelection({
-            value: this.pressed.first.count + this.pressed.second.hasOwnProperty('count') ? this.pressed.second.count : 0,
+            value: first + second,
             pressed: this.pressed
         });
         this.clear();

@@ -1,6 +1,7 @@
 'use strict';
 var Navigation = require('./navigation/board.js'),
-    Scanner = require('./scanner.js');
+    Scanner = require('./scanner.js'),
+    Player = require('./player.js')();
 
 class Juke {
     constructor (app) {
@@ -56,8 +57,6 @@ class Juke {
             return;
         }
 
-        console.log(result);
-
         if (this.playTrackIfAlbumIsSet(result)) {
             console.log('playTrackIfCurrentIsSet');
             return;
@@ -68,6 +67,7 @@ class Juke {
             return;
         }
 
+        console.log(result);
         if (this.showAlbum(result)) {
             console.log('showAlbum');
             return;
@@ -90,14 +90,12 @@ class Juke {
         // set current active track
         if (album !== false && album.tracks.length >= result.value) {
 
-            var track = this.app.config.player.album.activeTrack;
-
             this.app.config.player.album.activeTrack = album.tracks[result.value - 2];
             console.log('tracklist length %s', album.tracks.length);
             console.log('track position %s', result.value - 2);
-            console.log(track);
+            console.log(this.app.config.player.album.activeTrack);
             this.sendToDisplay();
-
+            Player.play(__dirname + '/../../' + this.app.config.player.album.activeTrack.filePath);
             return true;
         }
 

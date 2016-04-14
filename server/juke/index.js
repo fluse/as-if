@@ -52,7 +52,7 @@ class Juke {
     }
 
     onSelection (result) {
-
+        console.log('valid');
         if (this.checkPaginationAction(result)) {
             return;
         }
@@ -87,12 +87,14 @@ class Juke {
 
         var album = this.app.config.player.album.current;
 
-        // set current active track
-        if (album !== false && album.tracks.length >= result.value) {
+        var trackPosition = result.value - 2;
 
-            this.app.config.player.album.activeTrack = album.tracks[result.value - 2];
+        // set current active track
+        if (album !== false && album.tracks.length > trackPosition) {
+
+            this.app.config.player.album.activeTrack = album.tracks[trackPosition];
             console.log('tracklist length %s', album.tracks.length);
-            console.log('track position %s', result.value - 2);
+            console.log('track position %s', trackPosition);
             console.log(this.app.config.player.album.activeTrack);
             this.sendToDisplay();
             Player.play(__dirname + '/../../' + this.app.config.player.album.activeTrack.filePath);

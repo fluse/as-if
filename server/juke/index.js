@@ -1,11 +1,13 @@
 'use strict';
 var Navigation = require('./navigation/board.js'),
     Scanner = require('./scanner.js'),
-    Player = require('./player.js')();
+    Player = require('./player');
 
 class Juke {
     constructor (app) {
         this.app = app;
+
+        this.player = Player();
 
         this.scanner = new Scanner(app, (list) => {
             this.app.config.player.album.list = list;
@@ -97,7 +99,12 @@ class Juke {
             console.log('track position %s', trackPosition);
             console.log(this.app.config.player.album.activeTrack);
             this.sendToDisplay();
-            Player.play(__dirname + '/../../' + this.app.config.player.album.activeTrack.filePath);
+
+            try {
+                this.player.play(__dirname + '/../../' + this.app.config.player.album.activeTrack.filePath);
+            } catch (e) {
+
+            }
             return true;
         }
 

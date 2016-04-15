@@ -4,6 +4,7 @@
 @import 'base/general';
 @import 'base/breakpoints';
 @import 'base/animate';
+@import 'base/icons';
 @import 'base/grid';
 
 $highlight: #3A391D;
@@ -27,9 +28,15 @@ h1 {
         font-weight: 300;
         display: inline-block;
         padding: 0 6em;
+
+        small {
+            padding-top: .3em;
+            display: block;
+            font-size: 0.4em;
+        }
     }
 
-    .heart {
+    .icn-heart {
         position: relative;
         top: 3px;
         font-size: 1.8em;
@@ -343,18 +350,13 @@ h1 {
         margin-bottom: .4em;
     }
 
-    img {
-        opacity: 0.4;
-
-        margin-bottom: 2em;
-    }
-
     .image {
         float: left;
         height: 100%;
         width: 100%;
         opacity: 0.4;
-        border: none;
+        min-height: 130px;
+        margin-bottom: 2em;
         background-color: #3e3e3e;
         background-repeat: no-repeat;
         background-size: cover;
@@ -391,9 +393,41 @@ h1 {
         height: 36px;
         overflow: hidden;
         padding: .3em 0;
-        &.active {
-            background-color: $highlight;
+        @extend %cf;
+        .image {
+            float: left;
+            height: 30px;
+            width: 30px;
+            max-width: 20%;
+            opacity: 0.4;
+            border: none;
+            background-color: #3e3e3e;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 7px 6px;
+
+            i {
+                font-size: 27px;
+                display: none;
+            }
         }
+
+        &.active {
+            .image {
+                opacity: 1;
+                background-color: $highlight;
+
+                i {
+                    display: block;
+                }
+            }
+        }
+
+        .info {
+            float: left;
+            padding-left: .4em;
+        }
+
         h3 {
             color: #908c8c;
             font-size: 1.3em;
@@ -403,7 +437,7 @@ h1 {
 
         padding: .2em 0;
         float: left;
-        width: 10%;
+        width: 12%;
 
         &:nth-child(5n+1) {
             width: 21.3%;
@@ -421,7 +455,7 @@ h1 {
         }
 
         &:nth-child(5n+4) {
-            width: 22%;
+            width: 20%;
             //background-color: green;
         }
 

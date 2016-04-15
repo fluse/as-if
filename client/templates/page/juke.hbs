@@ -1,8 +1,8 @@
 <h1>
     <small>made with love</small>
-    <strong class="heart">&#9829;</strong>
-    <strong>Jan Müller</strong>
-    <strong>Holger Schauf</strong>
+    <strong class="icn-heart"></strong>
+    <strong>Jan Müller <small>Elektronik</small></strong>
+    <strong>Holger Schauf<small>Interface / Programmierung holger-schauf.de</small></strong>
 </h1>
 
 <section class="debug cf" style="visibility:hidden">
@@ -23,8 +23,8 @@
 
                 </div>
                 <div class="info">
-                    <h3>\{{current.albumartist}}</h3>
-                    <h4>\{{current.album}}</h4>
+                    <h3>\{{current.albumartist ? current.albumartist : 'kein interpret'}}</h3>
+                    <h4>\{{current.album ? current.album : 'kein album' }}</h4>
                 </div>
             </div>
         </li>
@@ -35,7 +35,7 @@
 
     <div class="album-info" v-show="album.current !== false">
 
-        <span class="back">A1 für zurück</span>
+        <span class="back"><i class="icn-arrow-left"></i>A1 für zurück</span>
 
         <div class="image" style="background-image: url(\{{album.current.cover}})">
 
@@ -50,8 +50,11 @@
     <ul class="album-track-list" v-show="album.current !== false">
         <li v-for="track in album.current.tracks" v-bind:class="{ 'active': album.activeTrack.title === track.title}">
             <div class="album">
+                <div class="image">
+                    <i class="icn-music"></i>
+                </div>
                 <div class="info">
-                    <h3>\{{track.title}}</h3>
+                    <h3>\{{track.title ? track.title : 'kein titel'}}</h3>
                     <h4>\{{current.album}}</h4>
                     <h4>\{{current.duration}}</h4>
                 </div>

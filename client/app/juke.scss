@@ -32,7 +32,7 @@ h1 {
         small {
             padding-top: .3em;
             display: block;
-            font-size: 0.4em;
+            font-size: 0.6em;
         }
     }
 
@@ -355,11 +355,24 @@ h1 {
         height: 100%;
         width: 100%;
         opacity: 0.4;
-        min-height: 130px;
+        min-height: 210px;
         margin-bottom: 2em;
         background-color: #3e3e3e;
         background-repeat: no-repeat;
         background-size: cover;
+    }
+
+    .rock {
+        padding-top: 2em;
+        text-align: center;
+    }
+
+    .icn-rock {
+        color: #fff;
+        font-size: 100px;
+        position: relative;
+        left: 40%;
+        animation: color-me 40s infinite;
     }
 
     h3, h4, strong, .back {

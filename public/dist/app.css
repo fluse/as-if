@@ -911,7 +911,7 @@ h1 {
       max-width: 20%;
       opacity: 0.4;
       border: none;
-      background-color: #6c6c6c;
+      background-color: #3e3e3e;
       background-repeat: no-repeat;
       background-size: cover; }
     .album-list li .info {
@@ -997,9 +997,8 @@ h1 {
     height: 100%;
     width: 100%;
     opacity: 0.4;
-    padding: 100%;
     border: none;
-    background-color: #6c6c6c;
+    background-color: #3e3e3e;
     background-repeat: no-repeat;
     background-size: cover; }
   .album-info h3, .album-info h4, .album-info strong, .album-info .back {

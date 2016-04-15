@@ -129,7 +129,7 @@ li, p, strong, span, h2, h3, h4, h5 {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }
 
-.dur-500, .album-list li {
+.dur-500 {
   -webkit-animation-duration: .5s;
   animation-duration: .5s;
   -webkit-animation-fill-mode: both;
@@ -187,7 +187,7 @@ li, p, strong, span, h2, h3, h4, h5 {
   -webkit-animation-delay: 1s;
   animation-delay: 1s; }
 
-.delay-1200, .album-list li {
+.delay-1200 {
   -webkit-animation-delay: 1.2s;
   animation-delay: 1.2s; }
 
@@ -521,7 +521,7 @@ li, p, strong, span, h2, h3, h4, h5 {
     -webkit-transform: none;
     transform: none; } }
 
-.fadeInDown, .album-list li {
+.fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown; }
 
@@ -843,7 +843,7 @@ h1 {
     position: relative;
     top: 3px;
     font-size: 1.8em;
-    padding: 0 0 0 .1em;
+    padding: 0 2em 0 .1em;
     color: #8e1212; }
 
 .debug {
@@ -878,6 +878,8 @@ h1 {
     width: 10%;
     padding: .3em 0;
     float: left;
+    height: 36px;
+    overflow: hidden;
     transition: background-color .5s; }
     .album-list li:nth-child(6n+1) {
       width: 17.8%; }
@@ -902,11 +904,16 @@ h1 {
     .album-list li h4 {
       font-weight: 300;
       font-size: 0.9em; }
-    .album-list li img {
+    .album-list li .image {
       float: left;
       height: 100%;
+      width: 30px;
       max-width: 20%;
-      opacity: 0.4; }
+      opacity: 0.4;
+      border: none;
+      background-color: #6c6c6c;
+      background-repeat: no-repeat;
+      background-size: cover; }
     .album-list li .info {
       font-weight: normal;
       float: left;
@@ -984,8 +991,17 @@ h1 {
     margin-bottom: .4em; }
   .album-info img {
     opacity: 0.4;
-    width: 100%;
     margin-bottom: 2em; }
+  .album-info .image {
+    float: left;
+    height: 100%;
+    width: 100%;
+    opacity: 0.4;
+    padding: 100%;
+    border: none;
+    background-color: #6c6c6c;
+    background-repeat: no-repeat;
+    background-size: cover; }
   .album-info h3, .album-info h4, .album-info strong, .album-info .back {
     color: #908c8c;
     text-align: center;
@@ -1006,6 +1022,8 @@ h1 {
   float: left;
   width: 81%; }
   .album-track-list li {
+    height: 36px;
+    overflow: hidden;
     padding: .3em 0;
     padding: .2em 0;
     float: left;

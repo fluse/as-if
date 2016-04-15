@@ -33,7 +33,7 @@ h1 {
         position: relative;
         top: 3px;
         font-size: 1.8em;
-        padding: 0 0 0 .1em;
+        padding: 0 2em 0 .1em;
         color: rgb(142, 18, 18);
     }
 }
@@ -80,9 +80,8 @@ h1 {
         width: 10%;
         padding: .3em 0;
         float: left;
-        @extend .fadeInDown;
-        @extend .dur-500;
-        @extend .delay-1200;
+        height: 36px;
+        overflow: hidden;
         @extend %cf;
 
         &:nth-child(6n+1) {
@@ -140,11 +139,16 @@ h1 {
             font-size: 0.9em;
         }
 
-        img {
+        .image {
             float: left;
             height: 100%;
+            width: 30px;
             max-width: 20%;
             opacity: 0.4;
+            border: none;
+            background-color: #6c6c6c;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .info {
@@ -341,8 +345,20 @@ h1 {
 
     img {
         opacity: 0.4;
-        width: 100%;
+
         margin-bottom: 2em;
+    }
+
+    .image {
+        float: left;
+        height: 100%;
+        width: 100%;
+        opacity: 0.4;
+        padding: 100%;
+        border: none;
+        background-color: #6c6c6c;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     h3, h4, strong, .back {
@@ -373,7 +389,8 @@ h1 {
     float: left;
     width: 81%;
     li {
-
+        height: 36px;
+        overflow: hidden;
         padding: .3em 0;
         &.active {
             background-color: $highlight;

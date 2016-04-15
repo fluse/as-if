@@ -19,7 +19,9 @@
     <ul class="album-list cf \{{state.pressed.first && state.pressed.first.name ? state.pressed.first.name : ''}} " v-show="album.current === false">
         <li v-for="current in album.list">
             <div class="album">
-                <img :src="current.cover" />
+                <div class="image" style="background-image: url(\{{current.cover}})">
+
+                </div>
                 <div class="info">
                     <h3>\{{current.albumartist}}</h3>
                     <h4>\{{current.album}}</h4>
@@ -35,7 +37,9 @@
 
         <span class="back">A1 für zurück</span>
 
-        <img :src="album.current.cover" />
+        <div class="image" style="background-image: url(\{{album.current.cover}})">
+
+        </div>
 
         <h3>\{{album.current.albumartist}}</h3>
         <h4>\{{album.current.album}}</h4>

@@ -2,120 +2,140 @@ module.exports = {
     '53': {
         pin: 53,
         count: 0,
+        onAlbum: 0,
         name: 'A',
         type: 'first'
     },
     '51': {
         pin: 51,
-        count: 5,
+        count: 6,
+        onAlbum: 5,
         name: 'B',
         type: 'first'
     },
     '49': {
         pin: 49,
-        count: 10,
+        count: 12,
+        onAlbum: 10,
         name: 'C',
         type: 'first'
     },
     '47': {
         pin: 47,
-        count: 15,
+        count: 18,
+        onAlbum: 15,
         name: 'D',
         type: 'first'
     },
     '45': {
         pin: 45,
-        count: 20,
+        count: 24,
+        onAlbum: 20,
         name: 'E',
         type: 'first'
     },
     '43': {
         pin: 43,
-        count: 25,
+        count: 30,
+        onAlbum: 25,
         name: 'F',
         type: 'first'
     },
     '41': {
         pin: 41,
-        count: 30,
+        count: 36,
+        onAlbum: 30,
         name: 'G',
         type: 'first'
     },
     '39': {
         pin: 39,
-        count: 35,
+        count: 42,
+        onAlbum: 35,
         name: 'H',
         type: 'first'
     },
     '37': {
         pin: 37,
-        count: 40,
+        count: 48,
+        onAlbum: 40,
         name: 'J',
         type: 'first'
     },
     '35': {
         pin: 35,
-        count: 45,
+        count: 54,
+        onAlbum: 45,
         name: 'K',
         type: 'first'
     },
     '33': {
         pin: 33,
-        count: 50,
+        count: 60,
+        onAlbum: 50,
         name: 'L',
         type: 'first'
     },
     '31': {
         pin: 31,
-        count: 55,
+        count: 66,
+        onAlbum: 55,
         name: 'M',
         type: 'first'
     },
     '28': {
         pin: 28,
-        count: 60,
+        count: 72,
+        onAlbum: 60,
         name: 'N',
         type: 'first'
     },
     '26': {
         pin: 26,
-        count: 65,
+        count: 78,
+        onAlbum: 65,
         name: 'P',
         type: 'first'
     },
     '24': {
         pin: 24,
-        count: 70,
+        count: 84,
+        onAlbum: 70,
         name: 'Q',
         type: 'first'
     },
     '30': {
         pin: 30,
-        count: 75,
+        count: 90,
+        onAlbum: 75,
         name: 'R',
         type: 'first'
     },
     '32': {
         pin: 32,
-        count: 80,
+        count: 96,
+        onAlbum: 80,
         name: 'S',
         type: 'first'
     },
     '34': {
         pin: 34,
-        count: 85,
+        count: 102,
+        onAlbum: 85,
         name: 'T',
         type: 'first'
     },
     '36': {
         pin: 36,
-        count: 90,
+        count: 108,
+        onAlbum: 90,
         name: 'U',
         type: 'first'
     },
     '38': {
         pin: 38,
-        count: 95,
+        count: 114,
+        onAlbum: 95,
         name: 'V',
         type: 'first'
     },

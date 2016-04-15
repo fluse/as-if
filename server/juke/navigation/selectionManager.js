@@ -9,14 +9,14 @@ class SelectionManager {
 
         this.app = app;
         this.onSelection = onSelection || () => {};
-        this.isPaginationActive = true;
+        this.isPaginationActive = false;
         // create validity ticker instance with
         // validity duration and clear callback
         this.ticker = new Ticker(8, this.clear.bind(this));
 
         this.tickerPagination = new Ticker(0.8, () => {
-            console.log('isPaginationActive to active');
-            this.isPaginationActive = true;
+            console.log('pagination blocking stopped');
+            this.isPaginationActive = false;
         });
 
         this.pressed = {
@@ -28,9 +28,8 @@ class SelectionManager {
     onInput(buttons) {
         // check pressed button
         for (var button of buttons) {
-            this.checkForPressed(
-                button.getState()
-            );
+            var state = button.getState();
+            this.checkForPressed(state);
         }
 
         this.checkForValiditySelection();
@@ -39,48 +38,50 @@ class SelectionManager {
     checkForPressed(state) {
 
         if (state.isPressed) {
-
-            // set time
-            if (buttonMapping[state.pin].type === 'first') {
-                // start validity timer
-                this.ticker.abort().start();
-            }
+            var button = state;
 
             // check special behavior buttons
 
-            if (buttonMapping[state.pin].type === 'pageNext' || buttonMapping[state.pin].type === 'pagePrevous') {
-                this.pressed.first = buttonMapping[state.pin];
+            if (button.type === 'pageNext' || button.type === 'pagePrevous') {
+
+                this.pressed.first = button;
                 this.pressed.second = null;
 
-                if (this.isPaginationActive) {
+                if (!this.isPaginationActive) {
+                    this.isPaginationActive = true;
                     this.tickerPagination.start();
-
-                    return this.onSelectionEnd();
+                    this.onSelectionEnd();
                 }
                 return;
             }
 
-            // cache button behavior
-            this.pressed[buttonMapping[state.pin].type] = buttonMapping[state.pin];
-            if (buttonMapping[state.pin].type === 'first') {
+            // start reset timer
+            if (button.type === 'first') {
+                // start validity timer if button first
+                this.ticker.abort().start();
+
+                // reset second button if type is first
                 this.pressed.second = null;
             }
+
+            // cache button behavior
+            this.pressed[button.type] = button;
 
         }
     }
 
     checkForValiditySelection() {
-        //console.log(this.pressed);
+
         if (this.pressed.first !== null && this.pressed.second !== null) {
             this.onSelectionEnd();
         }
     }
 
     onSelectionEnd() {
-        var first = this.pressed.first.count;
-        var second = typeof this.pressed.second !== undefined && this.pressed.second !== null && this.pressed.second.hasOwnProperty('count') ? this.pressed.second.count : 0;
+        var firstValue = this.pressed.first.count;
+        var secondValue = this.pressed.second !== null ? this.pressed.second.count : 0;
         this.onSelection({
-            value: first + second,
+            value: firstValue + secondValue,
             pressed: this.pressed
         });
         this.clear();

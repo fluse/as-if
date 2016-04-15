@@ -4,6 +4,7 @@ var Navigation = require('./navigation/board.js'),
     Player = require('./player');
 
 class Juke {
+
     constructor (app) {
         this.app = app;
 
@@ -23,13 +24,15 @@ class Juke {
     }
 
     setPage (newPagePosition) {
-        console.log('current page %s', this.scanner.currentPage);
-        console.log('album pages length %s', this.getAlbumListCount());
+
         var newPage = this.scanner.currentPage + newPagePosition;
+
+        // skip to last
         if (newPage < 1) {
             newPage = this.getAlbumListCount();
         }
 
+        // skip to first
         if (this.getAlbumListCount() < newPage) {
             newPage = 1;
         }
@@ -38,7 +41,6 @@ class Juke {
 
         this.scanner.currentPage = newPage;
         this.setAlbumList();
-        this.sendToDisplay();
     }
 
     getCurrentPage () {
@@ -54,24 +56,20 @@ class Juke {
     }
 
     onSelection (result) {
-        console.log('valid');
-        if (this.checkPaginationAction(result)) {
-            return;
-        }
-
-        if (this.playTrackIfAlbumIsSet(result)) {
-            console.log('playTrackIfCurrentIsSet');
-            return;
-        }
-
-        if (this.showAlbumListIfCurrentIsSet(result)) {
-            console.log('showAlbumListIfCurrentIsSet');
-            return;
-        }
-
         console.log(result);
+        if (this.paginate(result)) {
+            return;
+        }
+
+        if (this.playTrack(result)) {
+            return;
+        }
+
+        if (this.goBack(result)) {
+            return;
+        }
+
         if (this.showAlbum(result)) {
-            console.log('showAlbum');
             return;
         }
 
@@ -79,93 +77,99 @@ class Juke {
         this.sendToDisplay();
     }
 
-    playTrackIfAlbumIsSet(result) {
+    playTrack(result) {
 
-        // all first restricted
-        if (this.state !== 'trackList' || result.pressed.second.count === 1) {
-            console.log('1 is restricted');
+        if (result.pressed.second === null) {
+            return false;
+        }
+
+        if (this.state !== 'trackList') {
+            return false;
+        }
+
+        // all 1 buttons restircted
+        if (result.pressed.second.count === 1) {
+            if (result.pressed.first.name !== 'A') {
+                console.log('%s%s blocked in tracklist mode',
+                    result.pressed.first.name,
+                    result.pressed.second.name
+                );
+
+            }
             return false;
         }
 
         var album = this.app.config.player.album.current;
-
-        var trackPosition = result.value - 2;
+        var value = result.pressed.first.onAlbum + result.pressed.second.count;
+        var trackPosition = value - 2;
 
         // set current active track
         if (album !== false && album.tracks.length > trackPosition) {
 
-            this.app.config.player.album.activeTrack = album.tracks[trackPosition];
-            console.log('tracklist length %s', album.tracks.length);
-            console.log('track position %s', trackPosition);
-            console.log(this.app.config.player.album.activeTrack);
-            this.sendToDisplay();
+            var track = album.tracks[trackPosition];
+            this.app.config.player.album.activeTrack = track;
+            console.log('track %s - %s', track.albumartist, track.title);
 
-            try {
-                this.player.play(__dirname + '/../../' + this.app.config.player.album.activeTrack.filePath);
-            } catch (e) {
+            this.player.play(__dirname + '/../../' + track.filePath);
 
-            }
-            return true;
+            return this.sendToDisplay();
         }
 
         return false;
     }
 
-    checkPaginationAction(result) {
+    paginate(result) {
+
         if (result.pressed.first.type === 'pagePrevous' || result.pressed.first.type === 'pageNext') {
+            this.setPage(result.pressed.first.type === 'pagePrevous' ? -1 : 1);
 
-            if (!this.navigation.selectionManager.isPaginationActive) {
-                return true;
-            }
-
-            this.navigation.selectionManager.isPaginationActive = false;
-
-            if (result.pressed.first.type === 'pagePrevous') {
-                this.setPage(-1);
-                return true;
-            }
-
-            if (result.pressed.first.type === 'pageNext') {
-                this.setPage(1);
-                return true;
-            }
-
-            this.navigation.selectionManager.clear();
-            this.sendToDisplay();
-            return true;
+            return this.sendToDisplay();
         }
 
         return false;
     }
 
     showAlbum(result) {
-        if (this.state === 'albumList') {
-            this.state = 'trackList';
-            this.navigation.selectionManager.clear();
-            this.prePareAlbum(result.value);
 
-            this.sendToDisplay();
-            return;
+        if (this.state !== 'albumList') {
+            return false;
         }
+
+        this.state = 'trackList';
+
+        this.navigation.selectionManager.clear();
+
+        this.prePareAlbum(result.value);
+
+        return this.sendToDisplay();
     }
 
-    showAlbumListIfCurrentIsSet(result) {
+    goBack(result) {
 
-        if (this.state === 'trackList' && !result.pressed.first.isPressed && result.pressed.second.count === 1) {
-            this.state = 'albumList';
-            this.app.config.player.album.current = false;
-            this.app.config.player.album.activeTrack = false;
-            this.navigation.selectionManager.clear();
-            this.sendToDisplay();
-            return true;
+        if (this.state !== 'trackList') {
+            return false;
         }
 
-        return false;
+        if (result.pressed.second.count !== 1) {
+            return false;
+        }
+
+        if (result.pressed.first.name !== 'A') {
+            return false;
+        }
+
+        this.state = 'albumList';
+        this.app.config.player.album.current = false;
+        this.app.config.player.album.activeTrack = false;
+        this.navigation.selectionManager.clear();
+
+        return this.sendToDisplay();
     }
 
     sendToDisplay() {
         console.log('displayUpate');
         this.app.io.sockets.emit('displayUpate', this.app.config.player.album);
+        return true;
     }
 
     prePareAlbum (value) {

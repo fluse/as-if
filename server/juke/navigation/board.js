@@ -62,8 +62,6 @@ class Board {
     }
 
     onInput () {
-        this.buttons = _.sortBy(this.buttons, function(o) { return o.name; });
-
         this.selectionManager.onInput(this.buttons);
 
         this.app.io.sockets.emit('getState', {

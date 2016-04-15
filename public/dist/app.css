@@ -254,25 +254,29 @@ li, p, strong, span, h2, h3, h4, h5 {
 
 @-webkit-keyframes color-me {
   0% {
-    color: orange; }
+    color: #8e433e; }
   30% {
     color: #4558bd; }
   50% {
     color: #591040; }
-  80% {
-    color: #3d7773; }
+  70% {
+    color: #105925; }
+  85% {
+    color: #233e6c; }
   100% {
     color: orange; } }
 
 @keyframes color-me {
   0% {
-    color: orange; }
+    color: #8e433e; }
   30% {
     color: #4558bd; }
   50% {
     color: #591040; }
-  80% {
-    color: #3d7773; }
+  70% {
+    color: #105925; }
+  85% {
+    color: #233e6c; }
   100% {
     color: orange; } }
 
@@ -1202,15 +1206,13 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover; }
   .album-info .rock {
-    padding-top: 2em;
+    padding-top: 6em;
     text-align: center; }
   .album-info .icn-rock {
-    color: #fff;
-    font-size: 100px;
-    position: relative;
-    left: 40%;
-    -webkit-animation: color-me 40s infinite;
-            animation: color-me 40s infinite; }
+    color: #3a3A3A;
+    font-size: 200px;
+    -webkit-animation: color-me 120s infinite;
+            animation: color-me 120s infinite; }
   .album-info h3, .album-info h4, .album-info strong, .album-info .back {
     color: #908c8c;
     text-align: center;
@@ -1236,7 +1238,7 @@ h1 {
     padding: .3em 0;
     padding: .2em 0;
     float: left;
-    width: 12%; }
+    width: 12.5%; }
     .album-track-list li .image {
       float: left;
       height: 30px;
@@ -1269,8 +1271,8 @@ h1 {
     .album-track-list li:nth-child(5n+2) {
       width: 21.3%; }
     .album-track-list li:nth-child(5n+3) {
-      width: 22%; }
+      width: 21%; }
     .album-track-list li:nth-child(5n+4) {
-      width: 20%; }
+      width: 20.5%; }
     .album-track-list li:nth-child(n+6):nth-child(-n+10) {
       margin-bottom: 6px; }

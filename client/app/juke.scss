@@ -363,16 +363,14 @@ h1 {
     }
 
     .rock {
-        padding-top: 2em;
+        padding-top: 6em;
         text-align: center;
     }
 
     .icn-rock {
-        color: #fff;
-        font-size: 100px;
-        position: relative;
-        left: 40%;
-        animation: color-me 40s infinite;
+        color: #3a3A3A;
+        font-size: 200px;
+        animation: color-me 120s infinite;
     }
 
     h3, h4, strong, .back {
@@ -450,7 +448,7 @@ h1 {
 
         padding: .2em 0;
         float: left;
-        width: 12%;
+        width: 12.5%;
 
         &:nth-child(5n+1) {
             width: 21.3%;
@@ -463,12 +461,12 @@ h1 {
         }
 
         &:nth-child(5n+3) {
-            width: 22%;
+            width: 21%;
             //background-color: green;
         }
 
         &:nth-child(5n+4) {
-            width: 20%;
+            width: 20.5%;
             //background-color: green;
         }
 

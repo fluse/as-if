@@ -201,7 +201,7 @@
 
 @keyframes color-me {
   0% {
-    color: orange;
+    color: rgb(142, 67, 62);
   }
   30% {
     color: rgb(69, 88, 189);
@@ -209,8 +209,11 @@
   50% {
     color: #591040;
   }
-  80% {
-      color: #3d7773;
+  70% {
+    color: #105925;
+  }
+  85% {
+      color: #233e6c;
   }
   100% {
     color: orange;

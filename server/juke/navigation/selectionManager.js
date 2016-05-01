@@ -41,7 +41,6 @@ class SelectionManager {
             var button = state;
 
             // check special behavior buttons
-
             if (button.type === 'pageNext' || button.type === 'pagePrevous') {
 
                 this.pressed.first = button;

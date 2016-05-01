@@ -17,6 +17,7 @@ class Juke {
 
         this.navigation = new Navigation(app, {
             onSelection: this.onSelection.bind(this),
+            onVolumeChange: this.onVolumeChange.bind(this),
             onReady: () => {}
         });
 
@@ -55,8 +56,11 @@ class Juke {
         this.app.config.player.album.list = this.scanner.getList();
     }
 
+    onVolumeChange(volume) {
+        this.player.setVolume(volume);
+    }
+
     onSelection (result) {
-        console.log(result);
         if (this.paginate(result)) {
             return;
         }

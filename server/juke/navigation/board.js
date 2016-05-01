@@ -13,19 +13,20 @@ class Board {
         this.buttonList = Mapping;
         this.buttons = [];
         this.volume = 0;
-
+        this.hooks = hooks;
         var board = new five.Board();
         this.lastVolatage = 0;
         this.maxVolatage = 1023;
         this.minVoltage = 330;
-        this.selectionManager = new SelectionManager(app, hooks.onSelection);
+        this.selectionManager = new SelectionManager(app, this.hooks.onSelection);
 
         var self = this;
         // initialize all buttons from buttonList;
         board.on('ready', function () {
             self.create();
 
-            this.analogRead(1, self.convertVolumePegel.bind(self));
+            this.pinMode(0, five.Pin.ANALOG);
+            this.analogRead(0, self.convertVolumePegel.bind(self));
 
             hooks.onReady();
         });
@@ -40,8 +41,8 @@ class Board {
             this.lastVolatage = voltage;
             var percentage = Math.round(Math.abs((voltage / this.maxVolatage * 100) - 100));
             this.volume = percentage;
-            this.onInput();
             //console.log('%s%', percentage);
+            this.hooks.onVolumeChange(this.volume / 100);
         }
     }
 
